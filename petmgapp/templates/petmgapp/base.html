@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html xmlns:og="http://ogp.me/ns#" lang="ko" class="" 
+        data-useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.5481.178 Safari/537.36">
+<head>
+        {% include 'petmgapp/include/pu_definition.html' %} 
+
+        {% include 'petmgapp/include/lib/bootstrap_css.html' %}
+        {% include 'petmgapp/include/lib/jQuery.html' %}     
+
+
+        <link href="{% static 'petmgapp/css/base.css' %}"
+        rel="stylesheet"
+        type="text/css">
+
+    <style>
+        .Img-fluid {
+            width: 50px;
+            height: 50px;
+            background-size: cover;
+            }
+
+        #maincontents{
+            width: auto;
+            height: auto;
+            text-align: center;
+        }
+
+        body{
+            background-color:#cff0da;
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column min-vh-100" style="background-color:#cff0da;">
+
+    <!-- 상단 -->
+    <header>
+        {% include 'petmgapp/include/base_nav.html' %} 
+    </header>
+
+    <div class="container-fluid px-0">
+        <!-- 페이지 메인 내용 -->  
+        <div id="maincontents">
+            <main>
+                <img src="{% static 'petmgapp/img/main/main_image_1.png' %}" class=""  alt="main2" usemap="#mapname">
+                
+                <map name="mapname">
+                    {% comment %} 회원가입 {% endcomment %}
+                    <area shape="rect" coords="1410,2439,1155,2376" href="/pet/mem_insert_view/"> 
+
+                    {% comment %} 로그인 {% endcomment %}
+                    <area shape="rect" coords="1697, 2437, 1449, 2374" href="/pet/login_logout/">
+
+                    {% if request.session.ses_mem_id != None %}
+                    <area shape="rect" coords="1665, 2555, 1189, 2491" href="/pet/report_view/">
+                    {% else %}
+                    <area shape="rect" coords="1665, 2555, 1189, 2491" href="/pet/mem_insert_view/" onclick="alert('회원가입 후 이용해주세요.')">              
+                    {% endif %}
+
+                    <area shape="rect" coords="586, 3397, 244,3331" href="/pet/dog_tip3/">
+                    <area shape="rect" coords="753, 3511, 181,3453" href="/pet/protect/">
+                </map>
+            </main>
+        </div>
+    </div>  
+
+    <!-- 하단 --> 
+    <footer class="bg-dark mt-auto">
+        {% include 'petmgapp/include/base_footer.html' %}     
+    </footer>
+    
+    {% include 'petmgapp/include/lib/bottstrap_js.html' %}
+</body>
+</html>
+
+

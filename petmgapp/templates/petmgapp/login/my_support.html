@@ -1,0 +1,204 @@
+{% load static %}
+
+<html xmlns:og="http://ogp.me/ns#" lang="ko" class="" 
+        data-useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.5481.178 Safari/537.36">
+
+<head>
+        {% include 'petmgapp/include/pu_definition.html' %} 
+        {% include 'petmgapp/include/lib/bootstrap_css.html' %}
+        {% include 'petmgapp/include/lib/jQuery.html' %}     
+
+        <link href="{% static 'petmgapp/css/base.css' %}"
+        rel="stylesheet"
+        type="text/css">
+
+        <script type="text/javascript">
+                function goUpdate(){
+                    fm=document.getElementById("fm");
+                    fm.action = "/pet/update/";
+                    fm.submit();
+                }
+                function goback1(){
+                    location.href ='/index';
+                }
+                function goview(desertionno){
+                    url = "/pet/support_view/?";
+                    url = url + "desertionno=" + desertionno;
+                    location.href = url;
+                }
+        </script>        
+
+        <style>
+            .block {
+                border-style: solid;
+                border-width: 3px;
+                border-color: #fcbe32;
+            }
+            .block {
+                /* Shorthand syntax */
+                border: solid 3px #fcbe32;
+                border-radius: 10px;
+                padding: 50px 50px 50px 50px;
+            }
+            #contents{
+                width: auto;
+                height: auto;
+                background: white;
+            }
+        </style>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <div class="container-fluid px-0">
+        <!-- 상단 -->
+        <div >
+            <header>
+                {% include 'petmgapp/include/base_nav.html' %}               
+            </header>
+        </div>
+
+            <!-- 페이지 메인 내용 -->  
+            <div>
+                <main>
+                    <div class="container d-flex flex-wrap justify-content-center pt-3" style="color : black;">
+                    <span class="block mb-4" style="font-size : 18px;">
+                    <div class="">
+                    <div class="text-center fs-1">
+                        <p class="" style="color: #004e66;">
+                            <img src="{% static 'petmgapp/img/public/h1.png' %}"> {{request.session.ses_mem_name}}님의 후원 목록 :)  <img src="{% static 'petmgapp/img/public/h1.png' %}">
+                        </p>
+                    </div>
+                    <br/>
+                    <div class="container text-center">
+                        {% if spt_eve and spt_one %}
+                            <div class ="row">
+                                <div class="col">
+                                    정기 후원 목록
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">유기번호</th>
+                                                <th scope="col">후원종류</th>
+                                                <th scope="col">후원금액</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {%for eve_list in spt_eve%}
+                                            <tr>
+                                                <td><a href="javascript:goview('{{eve_list.desertionno}}')"> {{ eve_list.desertionno }}</a></td>
+                                                <td>{{ eve_list.support }}</td>
+                                                <td>{{ eve_list.money }}</td>
+                                            </tr>
+                                            {%endfor%}
+                                    </table>
+                                </div>
+                                <div class="col">
+                                    단일 후원 목록
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">유기번호</th>
+                                                <th scope="col">후원종류</th>
+                                                <th scope="col">후원금액</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {%for one_list in spt_one%}
+                                            <tr>
+                                                <td><a href="javascript:goview('{{one_list.desertionno}}')"> {{ one_list.desertionno }}</a></td>
+                                                <td>{{ one_list.support }}</td>
+                                                <td>{{ one_list.money }}</td>
+                                            </tr>
+                                            {%endfor%}
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p>정기후원 총액 {{eve_money}} 원</p>
+                                </div>
+                                <div class="col">
+                                    <p>단일후원 총액 {{one_money}} 원</p>
+                                </div>
+                            </div>
+
+                        {%elif spt_eve or spt_one%}
+                            {% if spt_eve %}
+                                <table class="table table-striped">
+                                    정기 후원 목록
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">유기번호</th>
+                                            <th scope="col">후원종류</th>
+                                            <th scope="col">후원금액</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {%for eve_list in spt_eve%}
+                                        <tr>
+                                            <td><a href="javascript:goview('{{eve_list.desertionno}}')"> {{ eve_list.desertionno }}</a></td>
+                                            <td>{{ eve_list.support }}</td>
+                                            <td>{{ eve_list.money }}</td>
+                                        </tr>
+                                        {%endfor%}
+                                    </tbody>
+                                </table>
+                                    <br/><p>정기후원 총액 {{eve_money}} 원</p>
+                            {% else %}
+                                <p>정기후원 목록이 없습니다.</p><br/>
+                            {%endif%}
+                        
+                            {% if spt_one %}
+                                <table class="table table-striped">
+                                    단일 후원 목록
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">유기번호</th>
+                                            <th scope="col">후원종류</th>
+                                            <th scope="col">후원금액</th>
+                                        </tr>
+                                    </thead>
+                                        <tbody>
+                                            {%for one_list in spt_one%}
+                                            <tr>
+                                                <td><a href="javascript:goview('{{one_list.desertionno}}')"> {{ one_list.desertionno }}</a></td>
+                                                <td>{{ one_list.support }}</td>
+                                                <td>{{ one_list.money }}</td>
+                                            </tr>
+                                            {%endfor%}
+                                        </tbody>
+                                    </table>
+                                    <br/><p>단일후원 총액 {{one_money}} 원</p>
+                            {% else %}
+                                <p>단일후원 목록이 없습니다.</p>
+                            {%endif%}
+                        {%else%}
+                            <p>후원 목록이 없습니다.</p>
+                        {%endif%}
+                    </div>
+
+                    <div class="row pt-5">
+                        <div class="col-lg-6 col-sm-12 text-lg-start text-center">
+                            
+                        </div>
+                        <div class="col-lg-6 col-sm-12 text-lg-end text-center mt-sm-auto">
+                            <button type="button" class="btn btn-outline-warning fw-bold"  style="color : black"
+                            onclick="history.go(-1)" class="btn btn-warning">돌아가기</button>
+                        </div>
+                    </div>  
+
+                    </span>
+                    </div>             
+                </main>
+            </div>
+
+        <!-- 하단 --> 
+        <footer class="bg-dark mt-auto">
+            {% include 'petmgapp/include/base_footer.html' %}     
+        </footer>
+    </div>   
+    
+    {% include 'petmgapp/include/lib/bottstrap_js.html' %}
+</body>
+</html>

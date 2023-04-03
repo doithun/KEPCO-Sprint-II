@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    {% include 'petmgapp/include/pu_definition.html' %} 
+
+    {% include 'petmgapp/include/lib/bootstrap_css.html' %}
+    {% include 'petmgapp/include/lib/jQuery.html' %} 
+
+    <style>
+    html,
+    body {
+        height: 100%;
+    }
+    
+    body {
+        display: flex;
+        align-items: center;
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-image: url("{% static 'petmgapp/img/login/login_page.jpg' %}");
+        background-repeat: no-repeat;
+        background-size: cover;         
+    }
+    
+    .form-signin {
+        width: 100%;
+        max-width: 330px;
+        padding: 15px;
+        margin: auto;
+    }
+    
+    .form-signin .checkbox {
+        font-weight: 400;
+    }
+    
+    .form-signin .form-floating:focus-within {
+        z-index: 2;
+    }
+    
+    .form-signin input[type="email"] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    
+    .form-signin input[type="password"] {
+        margin-bottom: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+    </style>
+
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>::: 잊지마멍멍 회원가입 :::</title>
+
+    {% include 'petmgapp/include/pu_definition.html' %} 
+
+    {% include 'petmgapp/include/lib/bootstrap_css.html' %}
+    {% include 'petmgapp/include/lib/jQuery.html' %}
+
+    <script type="text/javascript">
+        function goLogin(){
+            fm = document.getElementById("fm");
+            fm.action = "/pet/login/"
+            fm.submit();
+        }
+
+        function gocreate(){
+            location.href="/pet/mem_insert_view/";
+        }
+
+        function goLogout(){
+            location.href="/pet/logout/";
+        }
+        function gomain(){
+            location.href="/index"
+        }
+
+        function goBack() {
+            history.go(-1);
+        }
+    </script>
+
+    <style>
+        .fs-6 {
+            font-size: 0.8rem !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-signin text-center">
+        {% if request.session.ses_mem_id == None %}
+            
+            <h1 class="h3 mb-3 fw-normal">잊지마 멍멍</h1>
+            <img src="{% static 'petmgapp/img/logo/main_dog.png' %}" alt="" width="72" height="57" class="mb-4" type="button" onclick="gomain()">
+            <hr/>
+
+            <form name="fm" id="fm" method="post" action="#">
+                {% csrf_token %}
+
+                <div class="form-floating">
+                    <input type="text" class="form-control" name="mem_id" placeholder="아이디 입력">
+                    <label for="id">아이디</label>
+                </div>
+
+                <div class="form-floating">
+                    <input type="password" class="form-control" name="mem_pass" placeholder="비밀번호 입력">
+                    <label for="pwd">비밀번호</label>
+                </div>
+                <button onclick="goLogin()" class="w-100 btn btn-lg btn-warning" type="submit">로그인</button>
+            </form>       
+        {% else %}
+            <h3>로그인 확인</h3>
+            <hr/>
+            현재 로그인 아이디 : {{ request.session.ses_mem_id }}
+            <br/>
+            현재 로그인 이름  : {{ request.session.ses_mem_name }}
+            <hr/>
+            <br/>
+            <button onclick="goLogout()">로그아웃</button>
+        {% endif %}
+
+        <br/>
+        <br/>
+
+        <div class="row">
+            <div class="col-lg-6 col-sm-12 text-lg-start text-center">
+                <button onclick="gocreate()" class="btn btn-warning">회원가입</button>
+            </div>
+            <div class="col-lg-6 col-sm-12 text-lg-end text-center mt-sm-auto">
+                <button type="button" class="btn btn-warning" onclick="goBack()">취소</button>
+            </div>
+        </div>   
+        
+        <div class="col-lg-12 mx-auto">
+            <p class="lead mb-4 fs-6 pt-5">
+                Copyright ⓒ   <img src="{% static 'petmgapp/img/logo/kepco.png' %}" alt="" width="25" height="25" class="d-inline-block align-text-center">
+                            KEPCO_Digital_Bootcamp1기 
+                            <br> 
+                            Class B 3조팀 멍멍수호대. All Rights Reserved.
+            </p>
+        </div>
+    </div>
+    
+    {% include 'petmgapp/include/lib/bottstrap_js.html' %}
+</body>
+</html>
+

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html xmlns:og="http://ogp.me/ns#" lang="ko" class="" 
+        data-useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.5481.178 Safari/537.36">
+<head>
+        {% include 'petmgapp/include/pu_definition.html' %} 
+        {% include 'petmgapp/include/lib/bootstrap_css.html' %}
+        {% include 'petmgapp/include/lib/jQuery.html' %}     
+
+        <link href="{% static 'petmgapp/css/base.css' %}"
+        rel="stylesheet"
+        type="text/css">
+
+        <style>
+            .col {
+                padding: 5px;
+                border: 1px solid gray;
+                text-align: center;
+                font-size: 100%;
+            }
+
+            .div {
+                width: 100%;
+                height: auto;
+                border: 1px solid #000;
+            }
+
+            .div.left {
+                width: 50%;
+                float: left;
+                box-sizing: border-box;
+                
+                background: #ff0;
+            }
+            .div.right {
+                width: 50%;
+                float: right;
+                box-sizing: border-box;
+                
+                background: #0ff;
+            }
+        </style>
+
+        <script type="text/javascript">
+            function goBack() {
+                history.go(-1);
+            }
+
+            function gosupport(desertionno){
+                url = "/pet/support/?";
+                url = url + "desertionno=" + desertionno;
+                location.href = url;
+            }
+        </script>
+</head> 
+
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- 상단 -->
+    <header>
+      {% include 'petmgapp/include/base_nav.html' %}                 
+    </header>
+
+    <!-- 페이지 메인 내용 -->  
+    <div class="container-fluid p-3">
+          <div class="left mt-3">
+              <div class="text-center">
+                <img src="{{dog_list.popfile}}" class="rounded" width="30%">
+              </div>
+          </div>
+
+          <br/>
+
+          <div class="right">
+              <div class="container text-center mb-3">
+                  <table class="table table-hover table-bordered border-warning">
+                      <tbody>
+                        <tr>
+                          <th scope="row"> <img src="{% static 'petmgapp/img/public/h1.png' %}">유기번호<img src="{% static 'petmgapp/img/public/h1.png' %}"> </th>
+                          <td>{{dog_list.desertionno}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">접수일자</th>
+                          <td>{{dog_list.happendt}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">발견장소</th>
+                          <td>{{dog_list.happenplace}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">품종</th>
+                          <td>{{dog_list.kindcd}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">색상</th>
+                          <td>{{dog_list.colorcd}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">나이</th>
+                          <td>{{dog_list.age}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">체중</th>
+                          <td>{{dog_list.weight}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">공고번호</th>
+                          <td>{{dog_list.noticeno}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">공고기간</th>
+                          <td>{{dog_list.noticesdt}} ~ {{dog_list.noticeedt}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">상태</th>
+                          <td>{{dog_list.processstate}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">성별/중성화 여부</th>
+                          <td>{{dog_list.sexcd}} / {{dog_list.neuteryn}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">특징</th>
+                          <td>{{dog_list.specialmark}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">보호소</th>
+                          <td>{{dog_list.carenm}}<br/>
+                              {{dog_list.caretel}}<br/>
+                              {{dog_list.careaddr}}<br/></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">담당자</th>
+                          <td>{{dog_list.chargenm}}<br/>
+                              {{dog_list.officetel}}<br/></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">특이사항</th>
+                          <td>{%if dog_list.noticecomment == none%}
+                              없음
+                          {%else%}
+                              {{dog_list.noticecomment}}
+                          {%endif%}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <!-- 회원전용-->
+                    <div class="row">
+                      <div class="col-lg-6 col-sm-12 text-lg-start text-center">
+                        <!-- 후원하기 기능 회원전용-->
+                        {% if request.session.ses_mem_id == None %}
+                        <button type="button" class="btn btn-outline-warning fw-bold"  style="color : black" disabled value='후원하기(회원전용)'>
+                          후원하기(회원전용)</button>
+                        {% else %}
+                        <button type="button" class="btn btn-outline-warning fw-bold"  style="color : black"
+                        onclick="gosupport('{{dog_list.desertionno}}')">후원하기</button>
+                        {% endif %}
+                      </div>
+                      <div class="col-lg-6 col-sm-12 text-lg-end text-center mt-sm-auto">
+                        <button type="button" class="btn btn-outline-warning fw-bold"  style="color : black"
+                        onclick="goBack()">뒤로가기</button>
+                      </div>
+                  </div>
+              </div>
+          </div>    
+    </div>   
+
+  <!-- 하단 --> 
+  <footer class="bg-dark mt-auto">
+    {% include 'petmgapp/include/base_footer.html' %}     
+  </footer>
+
+    {% include 'petmgapp/include/lib/bottstrap_js.html' %}
+</body>
+</html>
+
+

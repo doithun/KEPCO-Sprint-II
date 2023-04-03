@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html xmlns:og="http://ogp.me/ns#" lang="ko" class="" 
+        data-useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.5481.178 Safari/537.36">
+<head>
+        {% include 'petmgapp/include/pu_definition.html' %} 
+
+        {% include 'petmgapp/include/lib/bootstrap_css.html' %}
+        {% include 'petmgapp/include/lib/jQuery.html' %}     
+
+
+        <link href="{% static 'petmgapp/css/base.css' %}"
+        rel="stylesheet"
+        type="text/css">
+        <style>
+
+        .Img-fluid {
+            width: 50px;
+            height: 50px;
+            background-size: cover;
+            }
+
+        #contents{
+            width: auto;
+            height: auto;
+            background: white;
+        }
+    </style>
+</head> 
+
+<body>
+    <div class="container-fluid px-0">
+        <!-- 상단 -->
+        <div id="header">
+            <header>
+                {% include 'petmgapp/include/base_nav.html' %}
+            </header>
+        </div>
+
+        <!-- 페이지 메인 내용 -->  
+        <div id="contents">
+            <main> 
+                    <img src="{% static 'petmgapp/img/main/main_1.png' %}" class="d-block w-100" alt="main1"><br/>
+                    <img src="{% static 'petmgapp/img/main/main_2.png' %}" class="d-block w-100"  alt="main2"><br/>
+                    <img src="{% static 'petmgapp/img/main/main_3.png' %}" class="d-block w-100"  alt="main3"><br/>
+                    <img src="{% static 'petmgapp/img/main/main_4.png' %}" class="d-block w-100"  alt="main4"><br/>
+                    <img src="{% static 'petmgapp/img/main/main_5.png' %}" class="d-block w-100"  alt="main5"><br/>
+            </main>
+        </div>
+    </div>  
+
+    <!-- 하단 --> 
+    <div id="footer">
+        <footer>
+            {% include 'petmgapp/include/base_footer.html' %}     
+        </footer>
+    </div> 
+    
+    {% include 'petmgapp/include/lib/bottstrap_js.html' %}
+</body>
+</html>
+
+

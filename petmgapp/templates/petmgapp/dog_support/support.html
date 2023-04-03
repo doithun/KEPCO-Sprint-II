@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html xmlns:og="http://ogp.me/ns#" lang="ko" class="" 
+        data-useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.5481.178 Safari/537.36">
+
+<head>
+        {% include 'petmgapp/include/pu_definition.html' %} 
+        {% include 'petmgapp/include/lib/bootstrap_css.html' %}
+        {% include 'petmgapp/include/lib/jQuery.html' %}     
+
+        <link href="{% static 'petmgapp/css/base.css' %}"
+        rel="stylesheet"
+        type="text/css">
+
+        <script type="text/javascript">
+            function gosupport_chk() {
+                    //fm 이름에 속해있는 모든 객체 가져오기 
+                    var suppo = document.getElementById("suppo");
+                        if(suppo.support.value == "") {
+                            alert("후원종류를 골라주세요");
+                            suppo.support.focus();
+                            return false;
+                        }
+                        if(suppo.money.value == "") {
+                            alert("후원할 금액을 입력해주세요");
+                            suppo.money.focus();
+                            return false;
+                        }
+                    suppo.action = "/pet/support_chk/"; 
+                    suppo.submit();
+                    }
+
+            function goBack() {
+                history.go(-1);
+            }
+        </script>        
+
+        <style>
+            .block {
+                border-style: solid;
+                border-width: 3px;
+                border-color: #fcbe32;
+            }
+
+            .block {
+                /* Shorthand syntax */
+                border: solid 3px #fcbe32;
+                border-radius: 10px;
+                padding: 50px 50px 0px 50px;
+            }
+
+            #contents{
+                width: auto;
+                height: auto;
+                background: white;
+            }
+        </style>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- 상단 -->
+    <header>
+        {% include 'petmgapp/include/base_nav.html' %} 
+    </header>
+
+    <div class="container-fluid p-3">
+        <!-- 페이지 메인 내용 -->  
+        <div>
+            <main>
+                <div class="container d-flex flex-wrap justify-content-center pt-3" style="color : black;">
+                    <span class="block mb-4" style="font-size : 18px;">
+                        <form id="suppo" name="suppo" method="post" enctype="multipart/form-data"
+                                action="#"> 
+                                {% csrf_token %}
+
+                                <div class="text-center pb-5 fs-1">
+                                    <p class="" style="color: #fcbe32;">
+                                        후원신청서 작성🎁
+                                    </p>
+                                </div>
+
+                                <div class="pb-5"> 
+                                    <p>
+                                        <img src="{{dog_list.popfile}}" alt="" width="500" height="500" class="d-inline-block align-text-center">
+                                        {% comment %} <img src="{{dog_list.filename}}"class="rounded mx-auto d-block" alt="..."> {% endcomment %}
+                                    </p>
+                                </div>
+
+                                <p>
+                                    <label for="input">후원 강아지 유기번호</label>
+                                    <input class="form-control" type="text" name="desertionno" id="desertionno"
+                                    value="{{dog_list.desertionno}}" aria-label="readonly input example" readonly>
+                                </p>
+
+                                <p>
+                                    <label for="input">후원자</label>
+                                    <input class="form-control" type="text" name="mem_id" id="mem_id"
+                                    value="{{request.session.ses_mem_name}}" aria-label="readonly input example" readonly>
+                                </p>
+                                <br/>
+
+                                <p>
+                                    <label for="select">후원 종류</label>
+                                    <select name="support" id="support">
+                                        <option value="">선택</option>
+                                        <option value="정기후원">정기후원</option>
+                                        <option value="단일후원">단일후원</option>
+                                        </optgroup>
+                                    </select>
+                                </p>
+                                <br/>
+
+                                <p>
+                                    <label for="input">후원금액</label>
+                                    <select name="money" id="money">
+                                        <option value="">선택</option>
+                                        <option value=1000>1000</option>
+                                        <option value=2000>2000</option>
+                                        <option value=3000>3000</option>
+                                        <option value=5000>5000</option>
+                                        <option value=10000>10000</option>
+                                        <option value=20000>20000</option>
+                                        <option value=30000>30000</option>
+                                        <option value=50000>50000</option>
+                                        <option value=100000>100000</option>
+                                        </optgroup>
+                                    </select>
+                                </p>
+                                <br/>
+
+                                <div class="row pb-5">
+                                    <div class="col-lg-6 col-sm-12 text-lg-start text-center">
+                                        <button type="button" class="btn btn-outline-warning fw-bold"  style="color : black"
+                                            onclick="gosupport_chk()">후원하기</button>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12 text-lg-end text-center mt-sm-auto">
+                                        <button type="button" class="btn btn-outline-warning fw-bold"  style="color : black"
+                                            onclick="goBack()">취소</button>
+                                    </div>
+                                </div>       
+                        </form> 
+                    </span>
+                </div>             
+            </main>
+        </div>
+    </div>  
+
+    <!-- 하단 --> 
+    <footer class="bg-dark mt-auto">
+        {% include 'petmgapp/include/base_footer.html' %}     
+    </footer>
+
+    {% include 'petmgapp/include/lib/bottstrap_js.html' %}
+</body>
+</html>

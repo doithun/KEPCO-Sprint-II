@@ -1,0 +1,32 @@
+.pe-5 {
+    padding-right: 5rem !important;
+}
+
+.ps-5 {
+    padding-left: 3rem !important;
+}
+
+.text-reset {
+    color: #004e66 !important;
+}
+
+#navbarCollapse .nav-link {
+    padding: .25rem 0;
+    font-weight: 700;
+    color: rgba(255, 255, 255, .5);
+    background-color: transparent;
+    border-bottom: .25rem solid transparent;
+}
+
+#navbarCollapse .nav-link:hover {
+border-bottom-color: #fcbe32;
+}
+
+#navbarCollapse .nav-link + .nav-link {
+margin-left: 1rem;
+}
+
+#navbarCollapse .active {
+color: #004e66;
+border-bottom-color: #ff5f2e;
+}

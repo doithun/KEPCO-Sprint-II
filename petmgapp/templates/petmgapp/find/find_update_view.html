@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html xmlns:og="http://ogp.me/ns#" lang="ko" class="" 
+        data-useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.5481.178 Safari/537.36">
+
+<head>
+        {% include 'petmgapp/include/pu_definition.html' %} 
+
+        {% include 'petmgapp/include/lib/bootstrap_css.html' %}
+        {% include 'petmgapp/include/lib/jQuery.html' %}     
+
+        <link href="{% static 'petmgapp/css/base.css' %}"
+        rel="stylesheet"
+        type="text/css">
+
+        <script type="text/javascript">
+            function goUpdate() {
+                    //fm 이름에 속해있는 모든 객체 가져오기
+                    var fm = document.getElementById("fm");
+
+                    // 이미지 파일 입력 여부 확인하기
+                    if(fm.popfile.value == "") {
+                        alert("이미지파일을 첨부해 주세요");
+                        fm.popfile.focus();
+                        return false;
+                    }
+
+                    // 상태 입력 여부 확인하기
+                    if(fm.processstate.value == "") {
+                        alert("상태(실종,구조,목격)를 입력해 주세요");
+                        fm.processstate.focus();
+                        return false;
+                    }
+
+                    // 접수일자 입력 여부 확인하기
+                    if(fm.happendt.value == "") {
+                        alert("접수일자를 입력해 주세요");
+                        fm.happendt.focus();
+                        return false;
+                    }
+
+                    // 장소 입력 여부 확인하기
+                    if(fm.happenplace.value == "") {
+                        alert("장소를 입력해 주세요");
+                        fm.happenplace.focus();
+                        return false;
+                    }
+
+    
+
+                    //alert(fm.popfile.value);                
+                    //alert(fm.processstate.value);
+                    //alert(fm.happendt.value);
+                    //alert(fm.happenplace.value);
+                    
+                    // 이동할 페이지 정의(즉, 요청페이지 정의)
+                    fm.action = "/pet/find_update/"; 
+        
+                    // 전송해주세요..처리
+                    fm.submit();
+                    }
+
+                    function goview(req_no, f_mem_id){
+                        url = "/pet/find_view/?";
+                        url = url + "req_no=" + req_no + "&"
+                        url = url + "f_mem_id=" + f_mem_id;
+                        location.href = url;
+                        //alert(url)
+                    }
+                        
+                    $(document).ready(function() {
+                        var pr  = document.getElementById("processstate");
+                        var sexcd  = document.getElementById("sexcd");
+                        var neuteryn  = document.getElementById("neuteryn");
+
+                        for(i=0; i < pr.options.length; i++) {
+                            if ("{{dog.processstate}}" == pr.options[i].value)
+                            {
+                                pr.options[i].selected = true; 
+                            }
+        
+                        }
+
+                        for(i=0; i < sexcd.options.length; i++) {
+                            if ("{{dog.sexcd}}" == sexcd.options[i].value)
+                            {
+                                sexcd.options[i].selected = true; 
+                            }
+        
+                        }
+
+                        for(i=0; i < neuteryn.options.length; i++) {
+                            if ("{{dog.neuteryn}}" == neuteryn.options[i].value)
+                            {
+                                neuteryn.options[i].selected = true; 
+                            }
+        
+                        }
+
+                        })
+            
+                    $(document).ready(function() {
+                    })
+
+                    window.onload=function() {
+                        var processstate  = document.getElementById("processstate");
+                        
+                    }
+
+                    function goBack() {
+                        history.go(-1);
+                    }
+        </script>        
+
+        <style>
+            .block {
+                border-style: solid;
+                border-width: 3px;
+                border-color: #fcbe32;
+            }
+
+            .block {
+                /* Shorthand syntax */
+                border: solid 3px #fcbe32;
+                border-radius: 10px;
+                padding: 40px 40px 40px 40px;
+            }
+
+            #contents{
+                width: auto;
+                height: auto;
+                background: white;
+            }
+
+            #img {
+                width: 400px;
+                height: 250px;
+                object-fit: fill;
+            }
+        </style>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <!-- 상단 -->
+    <header>
+        {% include 'petmgapp/include/base_nav.html' %} 
+    </header>
+    
+    <div class="container-fluid p-3">
+        <!-- 페이지 메인 내용 -->  
+        <div>
+            <main>
+                <div class="container d-flex flex-wrap justify-content-center my-3" style="color : black;">
+                    <span class="block" style="font-size : 18px;">
+                    <form id="fm" name="fm" method="post" enctype="multipart/form-data"
+                            action="#"> 
+                            {% csrf_token %}
+
+                            <div class="text-center pb-3 fs-1">
+                                <p class="" style="color: #fcbe32;">
+                                    찾고있어요(수정화면)
+                                </p>
+                            </div>
+
+                            <div class="text-center pb-3 fs-3">
+                                <p class="" style="color: #004e66;">
+                                    <img src="{% static 'petmgapp/img/public/h1.png' %}">고유번호<img src="{% static 'petmgapp/img/public/h1.png' %}">: {{dog.req_no}}번
+                                </p>
+                            </div>
+
+                            <div>
+                                <a href="javascript:goview('{{dog.req_no}}', '{{dog.f_mem_id}}')">
+                                    <img src="{{dog.popfile}}" class="rounded mb-5" id="img">
+                                </a>
+                            </div>
+
+                            <p>
+                                <label for="input">고유번호</label>
+                                <input class="form-control" type="text" name="req_no" id="req_no"
+                                value="{{dog.req_no}}" aria-label="readonly input example" readonly>
+                            </p>
+                            <br/>
+                            
+                            <p>
+                                <label for="file">이미지</label>
+                                <input type="file" name="popfile" id="popfile" 
+                                class="form-control" aria-label="file example"required>  
+                            </p>
+                            <br/>
+
+                            <p>
+                                <label for="select">상태(실종,구조,목격)</label>
+                                <select name="processstate" id="processstate">
+                                    <option value="">선택</option>
+                                    <option value="실종">실종</option>
+                                    <option value="구조">구조</option>
+                                    <option value="목격">목격</option>
+                                    </optgroup>
+                                </select>
+                            </p>
+
+                            <br/>
+
+                            <p>
+                                <label for="date">접수일자</label>
+                                <input type="date" name="happendt" id="happendt" value="{{dog.happendt}}">
+                            </p>                   
+                            <br/>
+
+                            <p>
+                                <label for="input">장소</label>
+                                <input class="form-control input-lg" 
+                                    type="text" name="happenplace" id="happenplace" 
+                                    placeholder="100글자 이내"
+                                    maxlength="100" value="{{dog.happenplace}}">
+                            </p>
+                            <br/>
+
+                            <p>
+                                <label for="input">품종</label>
+                                <input class="form-control input-sm"
+                                type="text" name="kindcd" id="kindcd" 
+                                placeholder="50글자 이내"
+                                maxlength="50" value="{{dog.kindcd}}">
+                            </p>
+                            <br/>
+
+                            <p>
+                                <label for="input">색상</label>
+                                <input type="text" name="colorcd" id="colorcd" 
+                                placeholder="30글자 이내"
+                                maxlength="30" value="{{dog.colorcd}}">
+                            </p>
+                            <br/>
+
+                            <p>
+                                <label for="input">나이</label>
+                                <input type="text" name="age" id="age" 
+                                placeholder="30글자 이내"
+                                maxlength="30" value="{{dog.age}}">
+                            </p>
+                            <br/>
+
+                            <p>
+                                <label for="select">성별</label>
+                                <select name="sexcd" id="sexcd">
+                                    <option value="">선택</option>
+                                    <option value="F">암컷</option>
+                                    <option value="M">수컷</option>
+                                    </optgroup>
+                                </select>
+                            </p>
+                            <br/>
+
+                            <p>
+                                <label for="select">중성화여부</label>
+                                <select name="neuteryn" id="neuteryn">
+                                    <option value="">선택</option>
+                                    <option value="Y">Y</option>
+                                    <option value="N">N</option>
+                                    </optgroup>
+                                </select>
+                            </p>
+                            <br/>
+
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-12 text-lg-start text-center">
+
+                                    <label for="textarea">특징</label>
+                                    <div class="form-floating">
+                                        <textarea name="specialmark" id="specialmark" rows="5"
+                                            maxlength="200"
+                                            placeholder="200글자 이내"> {{dog.specialmark}}
+                                        </textarea> 
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-12 text-lg-end text-center mt-sm-auto">
+                                    <div class="row">
+                                        <div class="col-lg-5 col-sm-12 text-lg-start text-center">
+                                            <button type="button" class="btn btn-outline-warning fw-bold"  style="color : black"
+                                                onclick="goUpdate()">수정</button>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-12 text-lg-start text-center">
+                                            <button type="button" class="btn btn-outline-warning fw-bold"  style="color : black"
+                                                onclick="goBack()">취소</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>              
+                    </form> 
+                    </span>
+                </div>             
+            </main>
+        </div>   
+    </div>   
+
+    <!-- 하단 --> 
+    <footer class="bg-dark mt-auto">
+        {% include 'petmgapp/include/base_footer.html' %}     
+    </footer>
+
+    {% include 'petmgapp/include/lib/bottstrap_js.html' %}
+    
+</body>
+</html>

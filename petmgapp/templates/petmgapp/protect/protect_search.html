@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html xmlns:og="http://ogp.me/ns#" lang="ko" class="" 
+        data-useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.5481.178 Safari/537.36">
+<head>
+        {% include 'petmgapp/include/pu_definition.html' %} 
+        {% include 'petmgapp/include/lib/bootstrap_css.html' %}
+        {% include 'petmgapp/include/lib/jQuery.html' %}   
+
+        <link href="{% static 'petmgapp/css/base.css' %}"
+        rel="stylesheet"
+        type="text/css">
+
+        <script type = "text/javascript">
+            function goview(desertionno){
+                url = "/pet/protect_view/?";
+                url = url + "desertionno=" + desertionno;
+                location.href = url;
+            }
+            function getsearch(){
+                url = "/pet/protect_search/?";
+                url = url + "s_table=" + s_table.value + "&"
+                url = url + "s_col=" + s_col + "&"
+                url = url + "keyword=" + keyword + "&"
+                search.action = url
+            }
+
+            function gosupport(desertionno){
+                url = "/pet/support/?";
+                url = url + "desertionno=" + desertionno;
+                location.href = url;
+            }
+        </script>
+</head> 
+
+<body class="d-flex flex-column min-vh-100" onload="init('{{temp_keyword}}', '{{temp_keyword2}}')">
+
+    <!-- 상단 -->
+    <header>
+        {% include 'petmgapp/include/base_nav.html' %} 
+    </header>
+
+    <div class="container-fluid p-3">
+        <!-- 상단 -->
+        <div >
+            <header>
+                    {% comment %} 검색 기능 {% endcomment %}
+                    <div class="container text-center mt-3">
+                        <div class="row">
+                            <div class="col">
+                                <div class="container">
+                                    <form method="get" id="search" name="search" action="#">
+                                        <table class="pull-right">
+                                            <tr>
+                                                <td><select class="form-select" name="s_table" id="s_table">
+                                                        <option value="dog_protect">보호중이에요</option>
+                                                </select></td>
+                                                <td><select class="form-select" name="s_col" id="s_col">
+                                                        <option value="desertionno">유기번호</option>
+                                                        <option value="happendt">접수일자</option>
+                                                        <option value="happenplace">발견장소</option>
+                                                        <option value="kindcd">품종</option>
+
+                                                        <option value="colorcd">색상</option>
+                                                        <option value="age">나이</option>
+                                                        <option value="weight">체중</option>
+                                                        <option value="weight">성별/중성화여부</option>
+                                                </select></td>
+                                                <td><input type="text" class="form-control"
+                                                    placeholder="검색어 입력" id="keyword" name="keyword" maxlength="100"></td>
+                                                <td><button type="submit" class="btn btn-light" onclick="getsearch(s_table, s_col, keyword)" >검색🔍</button></td>
+                                            </tr>
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>             
+            </header>
+        </div>
+
+
+        <!-- 페이지 메인 내용 -->  
+        <div>
+            <main>
+                <div class="container text-center" style='width:100%;'> 
+                    {% if rows_data %}
+                    <div class="row row-cols-1 row-cols-md-5 g-4 " style="margin: 0 auto;">
+                        {% for dog in rows_data %}
+                        <div class="col">
+                            <div class="card border-warning h-100">
+
+                                <a href="javascript:goview('{{dog.desertionno}}')">
+                                    <img src="{{dog.popfile}}" class="card-img-top" alt="...">
+                                </a>
+
+                                <div class="card-body">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item"> <img src="{% static 'petmgapp/img/public/h1.png' %}">유기번호<img src="{% static 'petmgapp/img/public/h1.png' %}"> <a href="javascript:goview('{{dog.desertionno}}')">{{dog.desertionno}}</a><br/></li>
+                                        <li class="list-group-item">접수 일자: {{dog.happendt}}</li>
+                                        <li class="list-group-item">발견 장소: {{dog.happenplace}}</li>
+                                        <li class="list-group-item">품종: {{dog.kindcd}}</li>
+                                        <li class="list-group-item">색상: {{dog.colorcd}}</li>
+                                        <li class="list-group-item">나이: {{dog.age}}</li>
+                                        <li class="list-group-item">체중: {{dog.weight}}</li>
+                                        <li class="list-group-item">성별/중성화여부: {{dog.sexcd}}/{{dog.neuteryn}}</li>
+                                        <br/>
+                                        
+                                        <!-- 후원하기 기능 회원전용-->
+                                        {% if request.session.ses_mem_id == None %}
+                                            <button type="button" class="btn btn-outline-warning fw-bold"  style="color : black" disabled value='후원하기(회원전용)'>
+                                                후원하기(회원전용)</button>
+                                        {% else %}
+                                            <button type="button" class="btn btn-outline-warning fw-bold"  style="color : black"
+                                            onclick="gosupport('{{dog.desertionno}}')">후원하기</button>
+                                        {% endif %}
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    {%endfor%}
+                    </div>
+                    
+                    {% else %}
+                        <br/><br/><p id="p1" class="fs-3" style="color:#004e66;">조회된 검색결과가 없습니다.</p>
+                    {%endif%}
+
+
+                    <div class="row">
+                        <div class="col">
+                            <p>
+                                <!-- 페이징처리 시작 -->
+                                <ul class='pagination' style="justify-content:center; font-size:12px;">
+                                {% if is_prev %}
+                                    <li class="page-item">
+                                        <!-- start_page | add:"-10"의 계산값 = start_page - 1 -->
+                                        <a class="page-link" 
+                                            href='/pet/protect_search/?s_table={{request.GET.s_table}}&s_col={{request.GET.s_col}}&keyword={{request.GET.keyword}}&page={{ start_page | add:"-10" }}'>
+                                                <span aria-hidden="true">«</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                                <!-- 페이지 번호 10개를 보여주기 -->
+                                {% for i in page_range %}
+                                    <li class="page-item">
+                                        <a class="page-link" href='/pet/protect_search/?s_table={{request.GET.s_table}}&s_col={{request.GET.s_col}}&keyword={{request.GET.keyword}}&page={{ i }}'>{{ i }}</a>
+                                    </li>
+                                {% endfor %}
+
+                                {% if is_next %}
+                                    <li class="page-item">
+                                        <!-- start_page | add:"10"의 계산값 = start_page + 1 -->
+                                        <a class="page-link" 
+                                            href='/pet/protect_search/?s_table={{request.GET.s_table}}&s_col={{request.GET.s_col}}&keyword={{request.GET.keyword}}&page={{ start_page | add:"10" }}'>
+                                            <span aria-hidden="true">»</span>
+                                    </a>
+                                    </li>
+                                {% endif %}
+                                </ul>
+                                <!-- 페이징처리 끝 -->
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                    <!-- End 페이징 처리 -->
+            </main>
+        </div>
+
+    </div>
+
+    <!-- 하단 --> 
+    <footer class="bg-dark mt-auto">
+        {% include 'petmgapp/include/base_footer.html' %}     
+    </footer>
+    
+
+    {% include 'petmgapp/include/lib/bottstrap_js.html' %}
+</body>
+</html>
+
+

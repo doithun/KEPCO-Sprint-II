@@ -1,0 +1,101 @@
+{% load static %}
+
+<link href="{% static 'petmgapp/css/base_nav.css' %}"
+rel="stylesheet"
+type="text/css">
+
+<script type = "text/javascript">
+    function goLogin(){
+
+        alert("로그인 후 이용가능합니다.")
+
+        url = "/pet/login_logout/";
+        location.href = url;
+    }
+</script>  
+
+<nav class="navbar navbar-expand-lg" style="background-color: #cff0da;">    
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold fs-2 ms-5 text-reset pe-5" href="/index">
+            <img src="{% static 'petmgapp/img/logo/main_dog.png' %}" alt="Logo" width="90" height="90" class="d-inline-block align-text-center">
+            잊지마멍멍
+        </a>
+
+        <div class="justify-content-center fs-5" id="navbarCollapse">
+            <ul class="navbar-nav">
+
+                <li class="nav-item pe-5"> 
+                    <a class="nav-link text-reset" aria-current="page" href="/index">Home</a>
+                </li>
+
+                <li class="nav-item pe-5">
+                    {% if request.session.ses_mem_id == None %}
+                    <a class="nav-link text-reset" aria-current="page" href="javascript:goLogin()">신고할래요(실종, 구조, 목격)</a>
+                    {% else %}
+                    <a class="nav-link text-reset" aria-current="page" href="/pet/report_view">신고할래요(실종, 구조, 목격)</a>                   
+                    {% endif %}
+                </li>
+                <li class="nav-item pe-5">
+                    <a class="nav-link text-reset" aria-current="page" href="/pet/find">찾고있어요</a>
+                </li>
+                <li class="nav-item pe-5">
+                    <a class="nav-link text-reset" aria-current="page" href="/pet/notice/" >발견했어요</a>
+                </li>
+                <li class="nav-item pe-5">
+                    <a class="nav-link text-reset" aria-current="page" href="/pet/protect/">보호중이에요</a>
+                </li>
+                <li class="nav-item pe-5">
+                    <div class="btn-group">
+                        <a class="nav-link text-reset"  aria-current="page" href="#"
+                        button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            tip
+                        </button></a>
+                        
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/pet/dog_tip1">유기동물 실종시</a></li>
+                            <li><a class="dropdown-item" href="/pet/dog_tip2">유기동물 습득시</a></li>
+                            <li><a class="dropdown-item" href="/pet/dog_tip3">유기동물 임시보호</a></li>
+                        </ul>
+                    </div> 
+                </li>
+            </ul>
+        </div>
+
+        {% if request.session.ses_mem_id == None %}
+        <div class="justify-content-end fs-5 pe-5" id="navbarCollapse"> 
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link text-reset" aria-current="page" href="/pet/login_logout/" tabindex="-1" aria-disabled="true">
+                        <img src="{% static 'petmgapp/img/login/paw.png' %}" alt="Logo" width="30" height="30" class="d-inline-block align-text-center">
+                        로그인
+                    </a>
+                </li>
+            </ul>
+        </div>
+        {% else %}
+        <div class="justify-content-end fs-5 pe-4" id="navbarCollapse"> 
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link text-reset" aria-current="page" href="/pet/logout/" tabindex="-1" aria-disabled="true">
+                        <img src="{% static 'petmgapp/img/login/paw.png' %}" alt="Logo" width="30" height="30" class="d-inline-block align-text-center">
+                        로그아웃
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav">
+                <li class="nav-item">
+            <a class="nav-link text-reset" aria-current="page" href="/pet/mem_my_view/" tabindex="-1" aria-disabled="true">
+                <img src="{% static 'petmgapp/img/login/login.png' %}" alt="Logo" width="30" height="30" class="d-inline-block align-text-end">
+                MY({{ request.session.ses_mem_name }})
+            </a>
+            </ul>
+        </div>
+    </div>
+        {% endif %}
+</nav>
+</div>
+
+
+
+

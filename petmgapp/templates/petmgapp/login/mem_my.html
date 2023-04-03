@@ -1,0 +1,147 @@
+{% load static %}
+
+<html xmlns:og="http://ogp.me/ns#" lang="ko" class="" 
+        data-useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.5481.178 Safari/537.36">
+
+<head>
+        {% include 'petmgapp/include/pu_definition.html' %} 
+
+        {% include 'petmgapp/include/lib/bootstrap_css.html' %}
+        {% include 'petmgapp/include/lib/jQuery.html' %}     
+
+        <link href="{% static 'petmgapp/css/base.css' %}"
+        rel="stylesheet"
+        type="text/css">
+
+        <script type="text/javascript">
+
+                function goUpdate(){
+                    fm=document.getElementById("fm");
+                    fm.action = "/pet/mem_update/";
+                    fm.submit();
+                }
+                
+
+
+                function goback(){
+                    history.go(-1);
+                }
+
+                
+
+        </script>        
+
+        <style>
+            .block {
+                border-style: solid;
+                border-width: 3px;
+                border-color: #fcbe32;
+            }
+
+            .block {
+                /* Shorthand syntax */
+                border: solid 3px #fcbe32;
+                border-radius: 10px;
+                padding: 50px 50px 50px 50px;
+            }
+
+            #contents{
+                width: auto;
+                height: auto;
+                background: white;
+            }
+        </style>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- 상단 -->
+    <header>
+        {% include 'petmgapp/include/base_nav.html' %}               
+    </header>
+    
+    <div class="container-fluid px-0">
+            <!-- 페이지 메인 내용 -->  
+            <div id="mycontents">
+                <main>
+                    <div class="container d-flex flex-wrap justify-content-center pt-3" style="color : black;">
+                    <span class="block mb-4" style="font-size : 18px;">
+                    <div class="">
+                    <form id="fm" name="fm" method="post" action="#"> 
+                            {% csrf_token %}
+
+                            <div class="text-center fs-1">
+                                <p class="" style="color: #004e66;">
+                                    Edit My Profile
+                                </p>
+                            </div>
+                            <br/>
+
+                            
+                            <p>
+                                <label for="input">아이디</label>
+                                <input class="form-control input-lg" 
+                                    type="text" name="mem_id" id="mem_id" 
+                                    value="{{ request.session.ses_mem_id }}"
+                                    aria-label="readonly input example" readonly
+                                    maxlength="100">
+                            </p>
+                            <br/>
+
+                            <p>
+                                <label for="input">비밀번호 수정</label>
+                                <input class="form-control input-sm"
+                                type="password" name="mem_pass" id="mem_pass" 
+                                value="{{ request.session.ses_mem_pass }}"
+                                maxlength="50">
+                            </p>
+                            <br/>
+
+                            <p>
+                                <label for="input">성함</label>
+                                <input class="form-control input-sm" type="text" name="mem_name" id="mem_name" 
+                                value="{{ request.session.ses_mem_name }}"
+                                aria-label="readonly input example" readonly
+                                maxlength="30">
+                            </p>
+                            <br/>
+
+                            <p>
+                                <label for="input">이메일</label>
+                                <input class="form-control input-sm" type="text" name="mem_email" id="mem_email" 
+                                value="{{ request.session.ses_mem_email }}"
+                                maxlength="30">
+                            </p>
+                            <br/>
+                            <p>
+                                <a href = "/pet/my_support_list/">내 후원목록 가기</a>
+                            </p>
+                            <br/>
+                    </form>                  
+                    </div>
+
+                    <div class="row pt-5">
+                        <div class="col-lg-6 col-sm-12 text-lg-start text-center">
+                            <button type="button" class="btn btn-outline-warning fw-bold"  style="color : black"
+                                onclick="goUpdate()" class="btn btn-warning">저장하기</button>
+                        </div>
+                        <div class="col-lg-6 col-sm-12 text-lg-end text-center mt-sm-auto">
+                            <button type="button" class="btn btn-outline-warning fw-bold"  style="color : black" 
+                                onclick="goback()" class="btn btn-warning">취소</button>
+                        </div>
+                    </div>  
+
+                    </span>
+                    </div>             
+                </main>
+            </div>
+    </div>   
+
+    <!-- 하단 --> 
+    <footer class="bg-dark mt-auto">
+        {% include 'petmgapp/include/base_footer.html' %}     
+    </footer>
+
+    {% include 'petmgapp/include/lib/bottstrap_js.html' %}
+</body>
+</html>

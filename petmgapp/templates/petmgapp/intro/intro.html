@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    {% include 'petmgapp/include/pu_definition.html' %} 
+
+    <link href="{% static 'petmgapp/css/stylesheet.css' %}"
+    rel="stylesheet"
+    type="text/css">
+
+    <!-- 폰트 됨 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+
+    
+    <style>
+        .container {
+            width: 100%;
+            height: 100vh;
+            /* 밑에꺼 검은색으로 불투명한거 */
+            background: linear-gradient(rgba(249, 247, 247, 0.8),rgba(249, 247, 247, 0.8)),url("{% static 'petmgapp/img/intro/dog.png' %}");
+            background-size: 38%; 
+        }
+
+        {% comment %} .container .tiledBackground {
+            background-image: url("{% static 'petmgapp/img/intro/dog.png' %}");
+            background-size: 100%;
+            width: 100%;
+            height: 100vh;
+            border: 2px solid;
+            color: pink;
+        } {% endcomment %}
+        
+    </style>
+
+
+    <script type="text/javascript">
+        function goIndex() {
+            url = "/index";
+            location.href = url;
+        }
+        function goReport() {
+            alert("로그인 후 이용해주세요.")
+            url = "/pet/login_logout/";
+            
+            location.href = url;
+        }
+        function goNotice() {
+            url = "pet/notice";
+            location.href = url;
+        }
+        function goProtect() {
+            url = "pet/protect";
+            location.href = url;
+        }
+        function goTip() {
+            url = "pet/dog_tip3";
+            location.href = url;
+        }
+    </script>
+        
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><a href="#">WITH ME </a></h1>
+            
+            <div class="nav">
+            </div>
+        </div>
+
+        <div class="hero">
+            <h2>DOG SHELTER</h2>
+
+            <p>
+                내 마음을 흔들어놓는 동물
+            </p>
+            {% comment %} <p>
+                    동물보호관리시스템(잊지마멍멍)
+            </p>
+            <br/>
+            <p>
+                <img src="{% static 'petmgapp/img/logo/main_dog.png' %}" alt="" width="25" height="25" class="d-inline-block align-text-center">
+                KEPCO_Digital_Bootcamp1기 Class B 3조팀 멍멍수호대 
+            </p>
+            <br/>
+            
+            <p>
+                <img src="{% static 'petmgapp/img/멤버.svg' %}" alt="" width="25" height="25">이상훈(조장)
+                <p>
+                    담당: 
+                </p>
+            </p>
+
+            <br/>
+
+            <p>
+                <img src="{% static 'petmgapp/img/public/h1.png' %}">이민지(조원)
+                <p>
+                    담당: 
+                </p>
+            </p>       
+
+            <br/>
+
+            <p>
+                <img src="{% static 'petmgapp/img/public/h1.png' %}">이현수(조원)
+                <p>
+                    담당: 
+                </p>
+            </p>    
+
+            <br/>
+            
+            <p>
+                <img src="{% static 'petmgapp/img/public/h1.png' %}">장진영(조원)
+                <p>
+                    담당: 
+                </p>
+            </p>    
+
+            <br/>
+
+            <p>
+                <img src="{% static 'petmgapp/img/public/h1.png' %}">황윤정(조원)
+                <p>
+                    담당: 
+                </p>
+            </p>     {% endcomment %}
+
+
+            <button onclick="goIndex()">
+                <strong>
+                HOME
+                </strong>
+            </button>
+            <button onclick="goReport()">
+                <strong>
+                신고할래요
+                </strong>
+            </button>
+            <button onclick="goNotice()">
+                <strong>
+                발견했어요
+                </strong>
+            </button>
+            <button onclick="goProtect()">
+                <strong>
+                보호중이에요
+                </strong>
+            </button>
+            <button onclick="goTip()">
+                <strong>
+                TIP
+                </strong>
+            </button>
+            
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html xmlns:og="http://ogp.me/ns#" lang="ko" class="" 
+        data-useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.5481.178 Safari/537.36">
+
+<head>
+        {% include 'petmgapp/include/pu_definition.html' %} 
+
+        {% include 'petmgapp/include/lib/bootstrap_css.html' %}
+        {% include 'petmgapp/include/lib/jQuery.html' %}    
+
+
+
+        <link href="{% static 'petmgapp/css/base.css' %}"
+        rel="stylesheet"
+        type="text/css">
+
+        <style>
+                /* div 태그 중에 클래스 이름이 div_style인 영역지정 */
+                /* 배경색: 검정색, 텍스트 색상:흰색, 패딩 : 20 */
+            div.div_style{
+                color: #212121;
+                padding: 20px;
+                margin : 20px;
+                width: 150px;
+                height: 300px;
+
+            }
+            
+            .pt-5{
+                padding-top: 8.5rem !important;
+            }
+        </style>
+
+        <script type="module">
+            import { Toast } from 'bootstrap.esm.min.js'
+        
+            Array.from(document.querySelectorAll('.toast'))
+            .forEach(toastNode => new Toast(toastNode))
+        </script>
+
+        <script type="text/javascript">
+            $(document).ready(
+                function(){
+                    $(".div1").click(
+                        function() {
+                        $(".panelsStayOpen-collapseOne").slideToggle("slow");
+                        }
+                    );
+                }
+            );
+        </script>
+</head> 
+
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- 상단 -->
+    <header>
+        {% include 'petmgapp/include/base_nav.html' %} 
+    </header>
+    
+    <div class="container w-auto p-3 py-5">
+        <main>
+            <div class="" style="text-align : center;">
+                <img src="{% static 'petmgapp/img/tip/dog_tip02.png' %}" width="50%" height="50%" >
+            </div>
+            
+            <br/>
+
+            <div class="container">
+                <nav id="navbar-example2" class="navbar bg-light px-3 mb-3">
+                    <a class="navbar-brand">유기동물 습득시 안내 </a>
+                    <ul class="nav nav-pills">
+                        </ul>
+                    </li>
+                    </ul>
+                </nav>
+                <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-light p-3 rounded-2" tabindex="0">
+                    <h4 id="scrollspyHeading1">▶ 전화번호 목줄 및 칩 확인하기</h4>
+                    <p>- 대부분의 반려동물 견주들은, 산책할 때 혹시 모를 일을 대비해 목줄 등에 견주의 번호 및 주소를 각인 해놓는다. <br>그래서 보통 유기동물을 발견하면 <strong>목줄</strong>부터 보게된다. 전화번호가 있는 것이 주인을 찾아주는 가장 이상적인 방법이 아닐까 싶다.<br>
+                        목줄에 아무런 정보를 얻을 수 없다면, 내장형 무선식별장치(내장칩)를 확인해보면 된다.<br> ‘반려동물의 신분증’이라고도 불리는 <strong>내장칩</strong>은 반려동물등록제로, 
+                        <br>반려동물과 보호자 정보관리를 통해 유기동물을 줄이고 보호자의 책임감을 높이기 위해 2014년부터 의무화됐다.<br>
+                    <h4 id="scrollspyHeading2">▶ 유기동물 신고하는 방법</h4>
+                    <p>- 만약, 인식표도, 반려동물등록도 돼있지 않다면, <strong>유기동물센터에 신고</strong>를 해야한다. <br>먼저, 포털에 동물보호관리시스템을 검색해 접속 후, 카테고리 중 ‘유기동물보호센터’에 들어가 지도로 지역을 선택할 수 있을 것이다.
+                        시 · 군 · 구별로 동물보호법 제15조(동물보호센터의 설치지정 등) 제1항의 규정에 따른 시 · 도 지사가 유기된 동물의 보호조치를 위해 농림축산식품부지령이 정하는 기준에 적합한 시설을 검색할 수 있다.
+                        각 지역별로 지정된 유기동물보호관리 센터를 찾을 수 있는데, 보호소와 동물병원 등 다양한 센터가 나온다. 센터에 전화를 한 뒤, 센터별 절차를 통해 유기동물을 안전하고 확실한 방법으로 보호할 수 있다. 
+                        유기동물은 관내 지정 센터에서 보호받을 수 있도록 필요한 조치를 받을 수 있으며 인터넷에 공고가 올라오게 된다. 
+                        이후 센터의 사정에 따라 <strong>10일간 보호</strong>하게 되며 주인을 찾지 못하는 경우 소유권이 시 · 군 · 구로 넘어가게 된다.
+                        공고 후 10일이 지나도 주인을 찾지 못하는 경우에는 시 · 군 · 구가 소유권을 갖게 되며 개인에게 기증 및 분양할 수 있게 된다.</p>
+                    <h4 id="scrollspyHeading3">▶ 주인을 찾아주는 작은 노력</h4>
+                    <p>- 유기동물를 위함은 주인을 빨리 만나게 해주는 것이 아닐까.<br>
+                        전국 보호소의 유기동물과 사람을 이어주는 <strong>동물보호관리시스템<a href="http://www.animal.go.kr">(www.animal.go.kr)</a></strong>이 있다. 
+                        유기동물 입양은 물론, 회원가입을 한 뒤 직접 유기동물 신고를 할 수도 있다.<br>
+                        또한, 주인이 신고하는 경우도 있으니, 만약 유기동물을 습득했다면 지정 센터로 이동하는 것 외에도 수고스럽지만,<br>
+                        동물보호관리시스템(www.animal.go.kr) 사이트을 통해 자신의 위치에서 주인을 찾아주기 위해서 최선을 다해주는 것도 좋은 방법이다.<br>
+                        물론, 이 같은 신고 절차와 노력이 의무가 애타게 찾고 있을 주인의 기쁨의 재회와 유기동물을 한마리라도 더욱더 줄일 수 있으리라 생각을 하여 봅니다.</p>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="bg-dark mt-auto">
+        {% include 'petmgapp/include/base_footer.html' %}     
+    </footer>
+
+{% include 'petmgapp/include/lib/bottstrap_js.html' %}
+
+</body>
+
+</html>
+
+
+

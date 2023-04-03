@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html xmlns:og="http://ogp.me/ns#" lang="ko" class="" 
+        data-useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.5481.178 Safari/537.36">
+
+<head>
+        {% include 'petmgapp/include/pu_definition.html' %} 
+
+        {% include 'petmgapp/include/lib/bootstrap_css.html' %}
+        {% include 'petmgapp/include/lib/jQuery.html' %}    
+
+
+
+        <link href="{% static 'petmgapp/css/base.css' %}"
+        rel="stylesheet"
+        type="text/css">
+
+        <style>
+                /* div 태그 중에 클래스 이름이 div_style인 영역지정 */
+                /* 배경색: 검정색, 텍스트 색상:흰색, 패딩 : 20 */
+            div.div_style{
+                color: #212121;
+                padding: 20px;
+                margin : 20px;
+                width: 150px;
+                height: 300px;
+
+            }
+            
+            .pt-5{
+                padding-top: 8.5rem !important;
+            }
+        </style>
+
+        <script type="module">
+            import { Toast } from 'bootstrap.esm.min.js'
+        
+            Array.from(document.querySelectorAll('.toast'))
+            .forEach(toastNode => new Toast(toastNode))
+        </script>
+
+        <script type="text/javascript">
+            $(document).ready(
+                function(){
+                    $(".div1").click(
+                        function() {
+                        $(".panelsStayOpen-collapseOne").slideToggle("slow");
+                        }
+                    );
+                }
+            );
+        </script>
+</head> 
+
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- 상단 -->
+    <header>
+        {% include 'petmgapp/include/base_nav.html' %} 
+    </header>
+
+    <div class="container w-auto p-3 py-5">
+        <main>
+            <div class="" style="text-align : center;">
+                <img src="{% static 'petmgapp/img/tip/dog_tip01.jpg' %}" width="50%" height="50%" >
+            </div>
+
+            <br/>
+
+            <div class="container">
+                <nav id="navbar-example2" class="navbar bg-light px-3 mb-3">
+                    <a class="navbar-brand">반려동물 실종시 대처 방안 </a>
+                    <ul class="nav nav-pills">
+                    
+                        </ul>
+                    </li>
+                    </ul>
+                </nav>
+
+                <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-light p-3 rounded-2" tabindex="0">
+                    <h4 id="scrollspyHeading1">▶ 최대한 빨리 전단지 배포하기</h4>
+                    <p>- 종종 길을 가다 보면 강아지나 고양이를 찾는다는 <strong>전단지</strong>를 발견하곤 하는데요.<br>
+                        전단지 배포의 핵심은 반려동물이 다른 지역으로 가버리기 전에 최대한 빨리 잃어버린 곳을 중심으로 배포하는 것입니다. 
+                        <br>함께 다녔던 공원이나 산책로, 병원 등에도 전단지를 붙이는 것이 좋습니다.<br>
+                        전단지를 만들 때는 반려동물의 사진, 특징, 잃어버린 장소와 시간, 보호자의 연락처 등이 꼭 들어가야 하며<br>
+                        반려동물의 사진은 흑백 보다는 컬러를 사용하는 것이 좋고 <strong>사진은 가장 최근 사진</strong>이 좋습니다. <br>또 전단지는 사람들의 눈에 잘 띄도록 큰 글씨를 사용하는 것이 좋고 전단지의 색깔 또한 눈에 잘 띄는 색을 넣는 것이 좋습니다.</p>
+                    <h4 id="scrollspyHeading2">▶ 동물보호관리시스템 검색</h4>
+                    <p>- 2014년 1월 1일부터 개를 소유한 사람은 전국 시·군·구청에 반드시 동물등록을 해야 하는데요.<br>
+                        동물 등록 방법은 <strong>내장형 무선식별장체 개체 삽입, 외장형 무선식별장치 부착, 등록 인식표 부착 </strong>총 3가지의 방법이 있습니다. <br>잃어버린 반려동물이 동물 등록 대행 병원이나 시·군·구청을 통해 반려동물 등록을 한 상태라면<br>
+                        동물보호관리시스템<strong><a href="http://www.animal.go.kr">(http://www.animal.go.kr)</a></strong>에서 동물등록정보를 통해 찾아볼 수 있고 게시물을 올려 분실신고를 할 수 있습니다.<br>
+                        또한 해당 지역의 관할 유기견 보호 센터나 구청에 전화해보는 것도 좋습니다.</p>
+                    <h4 id="scrollspyHeading3">▶ SNS 활용하기</h4>
+                    <p>- 반려동물을 잃어버렸을 경우 SNS에 글과 사진을 올리는 것도 도움이 되는데요.<br>
+                        <strong>페이스북, 인스타그램, 동물 관련 커뮤니티</strong>에 글을 올리면 많은 사람들에게 노출되므로 전단지를 붙이는 것처럼 좋은 방법이 될 수 있습니다.<br>
+                        SNS 역시 전단지와 마찬가지로 반려동물의 가장 최근 사진을 올리는 것이 좋으며 잃어버린 장소와 특징, 보호자의 연락처를 적어주어야 됩니다. <br>한편 공공장소를 떠돌거나 버려진 동물을 발견할 경우 관할 시·군·구청과 해당 유기 동물 보호시설에 신고해야 하며<br> 
+                        주인이 없는 동물이라고 여기고 마음대로 잡아서 팔거나 죽일 경우 <strong>500만원 이하의 벌금</strong>을 내게 됩니다.<br>
+                        인생을 함께 살아가는 반려동물을 잃어버렸을 때의 심정은 말로 설명할 수 없을 정도로 슬픈데요. <br>평소에 반려동물을 잃어버리지 않도록 보호자가 조심하고 꼼꼼히 살피는 것도 중요하지만 안타깝게도 반려동물을 잃어버렸을 경우에는<br> 보호자의 신속한 대처가 무엇보다 중요합니다.
+                        혹시 길을 가다가 주인을 잃은 것 같은 동물을 보셨나요?<br>
+                        귀찮은 마음에 그냥 길을 간다면 한 생명이 안타까운 상황에 처할 수 있지만<br> 근처 공공기관이나 동물병원 등에 신고한다면 반려동물이 따뜻한 가족의 품으로 돌아갈 수도 있다는 사실 잊지 마세요!<br></p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 하단 --> 
+    <footer class="bg-dark mt-auto">
+        {% include 'petmgapp/include/base_footer.html' %}     
+    </footer>
+
+        {% include 'petmgapp/include/lib/bottstrap_js.html' %}
+</body>
+
+</html>
+
+
+

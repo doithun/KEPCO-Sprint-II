@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html xmlns:og="http://ogp.me/ns#" lang="ko" class="" 
+        data-useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.5481.178 Safari/537.36">
+<head>
+        {% include 'petmgapp/include/pu_definition.html' %} 
+        {% include 'petmgapp/include/lib/bootstrap_css.html' %}
+        {% include 'petmgapp/include/lib/jQuery.html' %}   
+
+        <link href="{% static 'petmgapp/css/base.css' %}"
+        rel="stylesheet"
+        type="text/css">
+
+        <script type = "text/javascript">
+            function goview(req_no, f_mem_id){
+                url = "/pet/find_view/?";
+                url = url + "req_no=" + req_no + "&"
+                url = url + "f_mem_id=" + f_mem_id;
+                location.href = url;
+                //alert(url)
+            }
+            function getsearch(){
+                var search = document.getElementById("search");
+                search.action = "/pet/find_search/";
+                search.submit();
+            }
+
+            function init(temp_keyword, temp_keyword2){
+                var s_col  = document.getElementById("s_col");
+                var keyword = document.getElementById("keyword").value;
+
+                for(i=0; i < s_col.options.length; i++) {
+                    if (temp_keyword == s_col.options[i].value)
+                    {
+                        s_col.options[i].selected = true; 
+                    }
+
+                }
+
+
+                if (temp_keyword2 != keyword)
+                {
+                    $('input[name=keyword]').attr('value',temp_keyword2);
+                } 
+            }
+
+            function godelete(req_no, f_mem_id) {
+                url = "/pet/find_delete/?";
+                url = url + "req_no=" + req_no + "&";
+                url = url + "f_mem_id=" + f_mem_id;
+
+                //alert(req_no)
+                //alert(f_mem_id)
+                //alert(url)
+                                
+                location.href = url;
+            }
+
+            function goupdate(req_no, f_mem_id) {
+                url = "/pet/find_update_view/?";
+                url = url + "req_no=" + req_no + "&";
+                url = url + "f_mem_id=" + f_mem_id;
+
+                location.href = url;
+            };
+        </script>  
+</head> 
+
+<body class="d-flex flex-column min-vh-100" onload="init('{{temp_keyword}}', '{{temp_keyword2}}')">
+
+    <!-- 상단 -->
+    <header>
+        {% include 'petmgapp/include/base_nav.html' %} 
+    </header>
+    
+    <div class="container-fluid p-3">
+
+        <div>
+            <header>
+                {% comment %} 검색 기능 {% endcomment %}
+                <div class="text-center mt-3">
+                    <div class="row">
+                        <div class="col">
+                            <div class="container">
+                                <form method="post" id="search" name="search" action="#">
+                                    {% csrf_token %}
+                                    <table class="pull-right">
+                                        <tr>
+                                            <td>
+                                                <select class="form-select" name="s_table" id="s_table">
+                                                    <option value="dog_find">찾고있어요</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-select" name="s_col" id="s_col">
+                                                    <option value="req_no">고유번호</option>
+                                                    <option value="processstate">상태</option>
+                                                    <option value="happendt">접수일자</option>
+                                                    <option value="happenplace">장소</option>
+                                                    <option value="kindcd">품종</option>
+                                                    <option value="colorcd">색상</option>
+                                                    <option value="age">나이</option>
+                                                    <option value="sexcd">성별</option>
+                                                    <option value="neuteryn">중성화여부</option>
+                                                    <option value="mem_name">게시자</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control"
+                                                placeholder="검색어 입력" id="keyword" name="keyword" maxlength="100">
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn btn-light" onclick="getsearch()" >검색🔍
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>             
+            </header>
+        </div>
+
+        <!-- 페이지 메인 내용 -->  
+        <div>
+            <main>
+                <!-- 페이징 처리하기 Start -->
+                <div class="container text-center" style='width:100%;'> 
+                    {% if rows_data %}
+                    <div class="row row-cols-1 row-cols-md-5 g-4 " style="margin: 0 auto;">
+                        {% for dog in rows_data %}
+                        <div class="col">
+                            <div class="card border-warning h-100">
+
+                                <a href="javascript:goview('{{dog.req_no}}', '{{dog.f_mem_id}}')">
+                                <img src="{{dog.popfile}}" class="card-img-top" alt="...">
+                                </a>
+
+                                <div class="card-body">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item"> <img src="{% static 'petmgapp/img/public/h1.png' %}">고유번호<img src="{% static 'petmgapp/img/public/h1.png' %}"> 
+                                            : <a href="javascript:goview('{{dog.req_no}}', '{{dog.f_mem_id}}')">{{dog.req_no}}</a><br/></li>
+                                        <li class="list-group-item">상태: {{dog.processstate}}</li>
+                                        <li class="list-group-item">접수일자: {{dog.happendt}}</li>
+                                        <li class="list-group-item">장소: {{dog.happenplace}}</li>
+                                        <li class="list-group-item">품종: {{dog.kindcd}}</li>
+                                        <li class="list-group-item">색상: {{dog.colorcd}}</li>
+                                        <li class="list-group-item">나이: {{dog.age}}</li>
+                                        <li class="list-group-item">성별: {{dog.sexcd}}</li>
+                                        <li class="list-group-item">중성화여부: {{dog.neuteryn}}</li>
+                                        <li class="list-group-item">게시자: {{dog.mem_name}}</li>                                       
+                                        <br/>
+
+                                        <!-- 회원전용-->
+                                        <div class="row">
+                                            <div class="col-lg-6 col-sm-12 text-lg-start text-center">
+                                                {% if request.session.ses_mem_id == None or request.session.ses_mem_id != dog.f_mem_id %}
+                                                <button type="button" class="btn btn-outline-warning fw-bold"  style="color : black"
+                                                    disabled value='수정(회원전용)'>수정</button>
+                                                {% else %}
+                                                <button type="button" class="btn btn-outline-warning fw-bold"  style="color : black"
+                                                onclick="goupdate('{{dog.req_no}}', '{{dog.f_mem_id}}')">수정</button>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-lg-6 col-sm-12 text-lg-end text-center mt-sm-auto">
+                                                {% if request.session.ses_mem_id == None or request.session.ses_mem_id != dog.f_mem_id %}
+                                                <button type="button" class="btn btn-outline-warning fw-bold"  style="color : black"
+                                                    disabled value='삭제(회원전용)'>삭제</button>
+                                                {% else %}
+                                                <button type="button" class="btn btn-outline-warning fw-bold"  style="color : black" 
+                                                onclick="godelete('{{dog.req_no}}', '{{dog.f_mem_id}}')">삭제</button>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        {%endfor%}
+                    </div>
+
+                        {% else %}
+                            <br/><br/><p id="p1" class="fs-3" style="color:#004e66;">조회된 검색결과가 없습니다.</p>
+                        {%endif%}
+
+                    <div class="row">
+                        <div class="col">
+                            <p>
+                                <!-- 페이징처리 시작 -->
+                                <ul class='pagination' style="justify-content:center; font-size:12px;">
+                                {% if is_prev %}
+                                    <li class="page-item">
+                                        <!-- start_page | add:"-10"의 계산값 = start_page - 1 -->
+                                        <a class="page-link" 
+                                            href='/pet/find/?page={{ start_page | add:"-10" }}'>
+                                                <span aria-hidden="true">«</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                                <!-- 페이지 번호 10개를 보여주기 -->
+                                {% for i in page_range %}
+                                    <li class="page-item">
+                                        <a class="page-link" href='/pet/find/?page={{ i }}'>{{ i }}</a>
+                                    </li>
+                                {% endfor %}
+
+                                {% if is_next %}
+                                    <li class="page-item">
+                                        <!-- start_page | add:"10"의 계산값 = start_page + 1 -->
+                                        <a class="page-link" 
+                                            href='/pet/find/?page={{ start_page | add:"10" }}'>
+                                            <span aria-hidden="true">»</span>
+                                    </a>
+                                    </li>
+                                {% endif %}
+                                </ul>
+                                <!-- 페이징처리 끝 -->
+                            </p>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- End 페이징 처리 -->
+            </main>
+        </div>
+        
+    </div>
+
+    <!-- 하단 --> 
+    <footer class="bg-dark mt-auto">
+        {% include 'petmgapp/include/base_footer.html' %}     
+    </footer>
+
+
+    {% include 'petmgapp/include/lib/bottstrap_js.html' %}
+</body>
+</html>
+
+

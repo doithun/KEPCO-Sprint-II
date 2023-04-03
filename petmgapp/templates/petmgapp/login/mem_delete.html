@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <title>:::회원탈퇴::::</title>
+    <script type="text/javascript">
+        function goBack(){
+            history.go(-1);
+        }
+
+        function goDelete(){
+            fm = document.getElementById("fm");
+            fm.action = '/pet/mem_delete/';
+            fm.submit();
+        }
+    </script>
+    
+</head>
+<body>
+<form name="fm" id="fm" method="post" action="#">
+
+    {% csrf_token %}
+    <h3>회원탈퇴 </h3>
+    <hr/>
+    아이디 : <input type="text" name="mem_id" value="">                                 	
+    <br/>
+    비밀번호 : <input type="text" name="mem_pass" value="">
+    <br/>
+    이름 :  <input type="text" name="mem_name" value="">
+    <br/>
+    이메일 : <input type="text" name="mem_email" value="">
+    <br/>
+    <hr/>
+    <button onclick="goDelete()">탈퇴하기</button>
+    <input type="button" onclick="goBack()" value="취소">
+</form>
+</body>
+</html>

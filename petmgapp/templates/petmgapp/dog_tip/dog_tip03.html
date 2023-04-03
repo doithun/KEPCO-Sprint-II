@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html xmlns:og="http://ogp.me/ns#" lang="ko" class="" 
+        data-useragent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.5481.178 Safari/537.36">
+
+<head>
+        {% include 'petmgapp/include/pu_definition.html' %} 
+
+        {% include 'petmgapp/include/lib/bootstrap_css.html' %}
+        {% include 'petmgapp/include/lib/jQuery.html' %}    
+
+
+
+        <link href="{% static 'petmgapp/css/base.css' %}"
+        rel="stylesheet"
+        type="text/css">
+
+        <style>
+                /* div 태그 중에 클래스 이름이 div_style인 영역지정 */
+                /* 배경색: 검정색, 텍스트 색상:흰색, 패딩 : 20 */
+            div.div_style{
+                color: #212121;
+                padding: 20px;
+                margin : 20px;
+                width: 150px;
+                height: 300px;
+
+            }
+            
+            .pt-5{
+                padding-top: 8.5rem !important;
+            }
+        </style>
+
+        <script type="module">
+            import { Toast } from 'bootstrap.esm.min.js'
+          
+            Array.from(document.querySelectorAll('.toast'))
+              .forEach(toastNode => new Toast(toastNode))
+          </script>
+
+          <script type="text/javascript">
+            $(document).ready(
+                function(){
+                    $(".div1").click(
+                        function() {
+                        $(".panelsStayOpen-collapseOne").slideToggle("slow");
+                        }
+                    );
+                }
+            );
+        </script>
+</head> 
+
+<body class="d-flex flex-column min-vh-100">
+
+  <!-- 상단 -->
+  <header>
+      {% include 'petmgapp/include/base_nav.html' %} 
+  </header>
+  
+  <div class="container w-auto p-3 py-5">
+        <main>
+
+          <div class="" style="text-align : center;">
+            <img src="{% static 'petmgapp/img/tip/dog_tip03.jpg' %}" width="80%" height="80%" >
+          </div>
+
+          <br/>
+
+          <div class="container">
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+              <div class="accordion-item">
+                  <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                      <p class="fs-4">Q. 임보는 무엇일까요?</p>
+                    </button>
+                  </h2>
+                  <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body">
+                      <p class="fs-5"> A. 임보란 '임시보호'의 줄임말이에요. 구조된 동물이 새로운 삶을 찾게 될때까지, 
+                          통상적으로 '구조-임보-입양'의 3단계를 거치게 되는데요. <br/>
+                          구조 되자마자 바로 입양을 갈 수 있다면 좋겠지만, 
+                          통상적으로 평생 함께할 가족을 찾는 데는 시간이 걸리기 때문에 그 중간을<br/>
+                          이어주는 임보 과정이 필요하답니다. </p>
+                  </div>
+              </div>
+            </div>
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+              <div class="accordion-item">
+                  <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                      <p class="fs-4">Q. 임보가 왜 필요할까요? </p>
+                    </button>
+                  </h2>
+                  <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body">
+                      <p class="fs-5">A. 안타깝게도 현재 국내 유기동물 관리 시스템 상으로는 
+                        인력도 자원도 턱없이 부족해 대다수 보호소에서 안락사를 시행할 수 밖에 없는 실정이에요. <br/>
+                        따라서 임시보호는 한 생명을 구하는 가장 효과적이고 확실한 방법입니다. <br/>
+                        임보가 없다면 한 생명의 미래도 없어진다는 것, 
+                        임보의 중요성을 널리 알리고자 하는 이유입니다.</p>
+                  </div>
+              </div>
+            </div>
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+              <div class="accordion-item">
+                  <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                      <p class="fs-4">Q. 이런 분들께 추천해요 </p>
+                    </button>
+                  </h2>
+                  <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body">
+                      <p class="fs-5"><br/> - 입양을 결정하기 전에 먼저 경험해 보고 싶어요.<br/>
+                        - 오래 키운 아이를 보내서 한동안 입양은 못할 것 같아요.<br/>
+                        - 상황이 유동적이라 당장 입양은 어렵지만 몇 개월은 가능해요.<br/>
+                        - 혼자서는 우울하고 무서운데 집에 귀여운 룸메이트가 있으면 좋을 것 같아요.<br/>
+                        - 자녀들이 독립하니 집이 적적하고 허전해요</p>
+                  </div>
+                </div>
+            </div>
+            <div class="accordion" id="accordionPanelsStayOpenExample" >
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                    <p class="fs-4">Q. 이런 점은 미리 말씀드려요.</p>
+                  </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                  <div class="accordion-body">
+                    <p class="fs-5">
+                    - 동물과 함께하는 삶이 예상보다 힘들 수 있어요<br/>
+                    - 임보 기간이 생각보다 짧거나 길어질 수 있어요<br/>
+                    - 정이 많이 들면 입양 보낼 때 마음이 아플 수 있어요<br/>
+                    - 상처가 많다면 마음을 여는데 오래 걸릴 수 있어요<br/></p>
+                  </div>
+                </div>
+            </div>
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                    <p class="fs-4">Q. 임보자는 뭘 해야 할까? </p>
+                  </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                  <div class="accordion-body">
+                    <p class="fs-5">
+                    - 유기동물이 지낼 수 있는 안전한 공간 제공 <br/>
+                    - 가능하다면 SNS 등을 통해 입양 홍보 돕기<br/>
+                    - 밥과 물 챙겨주기<br/>
+                    - 배변 처리하기 <br/>
+                    - 입양 홍보를 위해 예쁜 사진과 영상 많이 찍어주기 <br/></p>
+                  </div>
+                </div>
+            </div>
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                    <p class="fs-4">Q. 신고등록 </p>
+                  </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                  <div class="accordion-body">
+                    <p class="fs-5">A. 실종된 동물을 찾거나, 보호(또는 목격)중인 동물의 주인을 찾는 글을 올리는 곳입니다.<br/>
+                      위와 관련없는 글은 부득이 삭제될 수 있습니다.<BR/> 동물학대신고, 동물구조요청은 링크를 꼭 확인하세요.
+                    에러 발생시 운영자에게 알려주십시오.<BR/>(최하단의 운영자에게)
+                    재등록은 이전 등록후 5일이 지나야합니다.</p>
+                  </div>
+                </div>
+            </div>
+          </div>
+          
+        </main>
+  </div>
+      
+  <!-- 하단 --> 
+  <footer class="bg-dark mt-auto">
+      {% include 'petmgapp/include/base_footer.html' %}     
+  </footer>
+
+  {% include 'petmgapp/include/lib/bottstrap_js.html' %}
+</body>
+
+</html>
+
+
+

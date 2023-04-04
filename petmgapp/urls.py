@@ -37,15 +37,14 @@ urlpatterns = [
     path('find_update_view/',views.FindUpdateView),
     path('find_update/',views.FindUpdate),  
         
-    path('support/',views.support),
-    path('support_chk/',views.support_chk),
-    path('support_view/',views.support_view),
+    path('support/',views.getSupport),
+    path('support_insert/',views.SupportInsert),
+    path('support_view/',views.getSupportView),
+    path('support_list/',views.getSupportList),
     
-    path('my_support_list/',views.my_support_list),
-    
-    path('dog_tip1/',views.getDogTip1),
-    path('dog_tip2/',views.getDogTip2),   
-    path('dog_tip3/',views.getDogTip3), 
+    path('dog_tip1/',views.getTip1),
+    path('dog_tip2/',views.getTip2),   
+    path('dog_tip3/',views.getTip3), 
     
     
     

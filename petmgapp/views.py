@@ -5,7 +5,7 @@ from django.http import HttpResponse
 import petmgapp.model_db.member.member as mem
 
 ###후원신청
-import petmgapp.model_db.dog_support.dog_support as dogspt
+import petmgapp.model_db.support.support as support
 
 ###신고할래요
 import petmgapp.model_db.report.report as report
@@ -179,19 +179,21 @@ def ReportInsert(request) :
 ########################################
 
 ### TIP
-def getDogTip1(request) : 
+def getTip1(request) : 
     return render(request,
-                    "petmgapp/dog_tip/dog_tip01.html",
-                        {})
-def getDogTip3(request) : 
-    return render(request,
-                    "petmgapp/dog_tip/dog_tip03.html",
+                    "petmgapp/tip/tip01.html",
                         {})
     
-def getDogTip2(request) : 
+def getTip2(request) : 
     return render(request,
-                    "petmgapp/dog_tip/dog_tip02.html",
+                    "petmgapp/tip/tip02.html",
                         {})
+    
+def getTip3(request) : 
+    return render(request,
+                    "petmgapp/tip/tip03.html",
+                        {})
+
     
 
 #####################################################
@@ -998,51 +1000,51 @@ def getProtectSearch(request) :
 
 
 ######################## support #####################################
-def support(request):
+def getSupport(request):
     if request.method == "GET" :
         desertionno = request.GET["desertionno"]
     elif request.method == "POST" :
         desertionno = request.POST["desertionno"]
         
-    dog_list = dogspt.getsupporting(desertionno)
+    dog_list = support.getSupport(desertionno)
     
     return render(request,
-                    "petmgapp/dog_support/support.html",
+                    "petmgapp/support/support.html",
                         {"dog_list":dog_list})
 
-def support_chk(request):
+def SupportInsert(request):
     if request.method == "GET" :
         desertionno = request.GET["desertionno"]
-        support = request.GET["support"]
+        support_type = request.GET["support_type"]
         money = request.GET["money"]
         
     elif request.method == "POST" :
         desertionno = request.POST.get("desertionno")
-        support = request.POST["support"]
+        support_type = request.POST["support_type"]
         money = request.POST["money"]
-        
+            
     # return HttpResponse(money)
 
-    dogspt.getsupport(request.session["ses_mem_id"], desertionno, support, money)
-    
+    support.SupportInsert(request.session["ses_mem_id"], desertionno, support_type, money)
+
     msg="""
             <script type='text/javascript'>
                 alert('후원이 성공적으로 신청되었습니다.');
-                location.href='/pet/my_support_list/';
+                location.href='/pet/support_list/';
             </script>
         """.format(desertionno)
         
     return HttpResponse(msg)
 
 
-def support_view(request) : 
+def getSupportView(request) : 
     if request.method == "GET" :
         desertionno = request.GET["desertionno"]
     elif request.method == "POST" :
         desertionno = request.POST["desertionno"]
-    dog_list = dogspt.getsptview(desertionno)
+    dog_list = support.getSupportView(desertionno)
     return render(request,
-                    "petmgapp/dog_support/support_view.html",
+                    "petmgapp/support/support_view.html",
                     {"dog_list" : dog_list})
     
     
@@ -1104,9 +1106,9 @@ def FindUpdateView(request) :
         "petmgapp/find/find_update_view.html",
             {"dog" : dog})
 
-def my_support_list(request):
+def getSupportList(request):
     try :
-        spt_eve,spt_one,eve_money, one_money = dogspt.getspt_list(request.session["ses_mem_id"])
+        spt_eve,spt_one,eve_money, one_money = support.getSupportList(request.session["ses_mem_id"])
             
     except :
         url = "/pet/login_logout/"

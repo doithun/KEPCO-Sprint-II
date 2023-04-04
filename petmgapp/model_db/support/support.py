@@ -67,7 +67,7 @@ def DBClose(cursor, conn):
     ### 접속 끊기(통로가 사라짐)
     conn.close()
 
-def getsupporting(desertionno) :
+def getSupport(desertionno) :
     conn, cursor = getDBConn_Cursor()
     
     ### SQL 구문 작성
@@ -104,20 +104,20 @@ def getsupporting(desertionno) :
     return dict_col
 
 ##################### 후원하기
-def getsupport(mem_id, desertionno, support, money) :
+def SupportInsert(mem_id, desertionno, support_type, money) :
 
     conn, cursor = getDBConn_Cursor()
     
     sql = """
             INSERT INTO DOG_SUPPORT
-            ( mem_id, desertionno, support, money)
+            ( mem_id, desertionno, support_type, money)
             VALUES (
                 '{}',
                 {},
                 '{}',
                 {}
             )
-    """.format(mem_id, desertionno, support, money)
+    """.format(mem_id, desertionno, support_type, money)
     
     cursor.execute(sql)
     
@@ -126,13 +126,13 @@ def getsupport(mem_id, desertionno, support, money) :
     DBClose(cursor, conn)
     return "OK"
 
-def getspt_list(mem_id) :
+def getSupportList(mem_id) :
     conn, cursor = getDBConn_Cursor()
     
     # 정기후원 검색
     sql= """
             Select * From dog_support
-            where mem_id = '{}' and support = '정기후원'
+            where mem_id = '{}' and support_type = '정기후원'
         """.format(mem_id)
     cursor.execute(sql)
     spt_eve = cursor.fetchall()
@@ -142,7 +142,7 @@ def getspt_list(mem_id) :
     # 정기 후원 금액
     sql= """
             select sum(money) from dog_support
-            where support='정기후원' and mem_id = '{}'
+            where support_type='정기후원' and mem_id = '{}'
         """.format(mem_id)
     cursor.execute(sql)
     eve_money = cursor.fetchone()
@@ -150,7 +150,7 @@ def getspt_list(mem_id) :
     # 단일후원 검색
     sql= """
             Select * From dog_support
-            where mem_id ='{}' and support = '단일후원'
+            where mem_id ='{}' and support_type = '단일후원'
         """.format(mem_id)
     cursor.execute(sql)
     spt_one = cursor.fetchall()
@@ -159,7 +159,7 @@ def getspt_list(mem_id) :
     # 단일후원 금액
     sql= """
             select sum(money) from dog_support
-            where support='단일후원' and mem_id='{}'
+            where support_type='단일후원' and mem_id='{}'
         """.format(mem_id)
     cursor.execute(sql)
     one_money = cursor.fetchone()
@@ -168,7 +168,7 @@ def getspt_list(mem_id) :
     
     return spt_eve, spt_one, eve_money, one_money
 
-def getsptview(desertionno) :
+def getSupportView(desertionno) :
     conn, cursor = getDBConn_Cursor()
     
     ### SQL 구문 작성

@@ -14,12 +14,12 @@
         type="text/css">
 
         <script type="text/javascript">
-            function gosupport_chk() {
+            function gosupport_insert() {
                     //fm 이름에 속해있는 모든 객체 가져오기 
                     var suppo = document.getElementById("suppo");
-                        if(suppo.support.value == "") {
+                        if(suppo.support_type.value == "") {
                             alert("후원종류를 골라주세요");
-                            suppo.support.focus();
+                            suppo.support_type.focus();
                             return false;
                         }
                         if(suppo.money.value == "") {
@@ -27,7 +27,7 @@
                             suppo.money.focus();
                             return false;
                         }
-                    suppo.action = "/pet/support_chk/"; 
+                    suppo.action = "/pet/support_insert/"; 
                     suppo.submit();
                     }
 
@@ -103,7 +103,7 @@
 
                                 <p>
                                     <label for="select">후원 종류</label>
-                                    <select name="support" id="support">
+                                    <select name="support_type" id="support_type">
                                         <option value="">선택</option>
                                         <option value="정기후원">정기후원</option>
                                         <option value="단일후원">단일후원</option>
@@ -133,7 +133,7 @@
                                 <div class="row pb-5">
                                     <div class="col-lg-6 col-sm-12 text-lg-start text-center">
                                         <button type="button" class="btn btn-outline-warning fw-bold"  style="color : black"
-                                            onclick="gosupport_chk()">후원하기</button>
+                                            onclick="gosupport_insert()">후원하기</button>
                                     </div>
                                     <div class="col-lg-6 col-sm-12 text-lg-end text-center mt-sm-auto">
                                         <button type="button" class="btn btn-outline-warning fw-bold"  style="color : black"

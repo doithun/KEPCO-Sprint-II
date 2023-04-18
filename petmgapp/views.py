@@ -25,8 +25,10 @@ from petmgapp.model_db.file_util.file_util import File_Util
 ### 페이징처리 라이브러리
 from django.core.paginator import Paginator
 
-# Create your views here.
+### 카카오 지도 api 라이브러리
+import petmgapp.model_db.api.kakao_api as kakao
 
+# Create your views here.
 
 ### 인트로
 def getIntro(request) : 
@@ -536,14 +538,38 @@ def getNotice(request) :
 def getNoticeView(request) : 
     if request.method == "GET" :
         desertionno = request.GET["desertionno"]
+        s_table = request.GET["s_table"]
     elif request.method == "POST" :
         desertionno = request.POST["desertionno"]
-        
-    dog_list = notice.getNoticeView(desertionno)
+        s_table = request.GET["s_table"]
     
+    # return HttpResponse(s_table)
+        
+    dog_list = notice.getNoticeView(desertionno, s_table)
+    
+    location = [dog_list['careaddr']]
+    
+    # return HttpResponse(location)
+    if kakao.getLocation_info(location) != False:
+        df, x, y = kakao.getLocation_info(location)
+    else :
+        return render(request,
+                        "petmgapp/notice/notice_view.html",
+                            {"dog_list" : dog_list,
+                            "s_table" : s_table,
+                            "location_map" : ""})       
+    
+    location_xy = [x,y]
+    
+    location_map = kakao.getKakaoMapHtml(dog_list['carenm'],y, x)
+    
+    # return HttpResponse(location_map)
+
     return render(request,
                     "petmgapp/notice/notice_view.html",
-                        {"dog_list" : dog_list})
+                        {"dog_list" : dog_list,
+                        "s_table" : s_table,
+                        "location_map" : location_map})
 
 #############################   protect    ##################################
 def getProtect(request) : 
@@ -623,14 +649,19 @@ def getProtect(request) :
 def getProtectView(request) : 
     if request.method == "GET" :
         desertionno = request.GET["desertionno"]
+        s_table = request.GET["s_table"]
     elif request.method == "POST" :
         desertionno = request.POST["desertionno"]
+        s_table = request.GET["s_table"]
+    
+    # return HttpResponse(s_table)
         
-    dog_list = protect.getProtectView(desertionno)
+    dog_list = protect.getProtectView(desertionno, s_table)
     
     return render(request,
                     "petmgapp/protect/protect_view.html",
-                        {"dog_list" : dog_list})
+                        {"dog_list" : dog_list,
+                        "s_table" : s_table})
 
 
 def getFind(request) : 
@@ -831,6 +862,12 @@ def getNoticeSearch(request) :
             s_col = request.POST["s_col"]  
             keyword = request.POST["keyword"]  
             
+    temp1 = s_table
+    temp2 = s_col
+    temp3 = keyword  
+
+    #return HttpResponse(temp1)
+
     ### 현재 선택된 페이지 데이터 받아오기
     # - 최초에는 GET방식으로 넘어오는 데이터가 없음
     #   -> get("page","1") : 데이터가 없으면 1로 초기화 시킴
@@ -901,6 +938,9 @@ def getNoticeSearch(request) :
         "is_next" : is_next,
         "start_page" : start_page,
         "page_range" : range(start_page, end_page + 1),
+        "temp1" : temp1,
+        "temp2" : temp2,
+        "temp3" : temp3
     }
     
     return render(request,
@@ -919,6 +959,10 @@ def getProtectSearch(request) :
             s_col = request.POST["s_col"]  
             keyword = request.POST["keyword"]  
             
+    temp1 = s_table
+    temp2 = s_col
+    temp3 = keyword 
+                
     ### 현재 선택된 페이지 데이터 받아오기
     # - 최초에는 GET방식으로 넘어오는 데이터가 없음
     #   -> get("page","1") : 데이터가 없으면 1로 초기화 시킴
@@ -934,10 +978,6 @@ def getProtectSearch(request) :
     except:
         now_page = 1
         
-        
-    temp_keyword = s_col
-                
-    # return HttpResponse(s_col)
 
     ### 데이터 조회
     dog_list = protect.getProtectSearch(s_table, s_col, keyword)
@@ -994,7 +1034,9 @@ def getProtectSearch(request) :
         "is_next" : is_next,
         "start_page" : start_page,
         "page_range" : range(start_page, end_page + 1),
-        "temp_keyword" : temp_keyword
+        "temp1" : temp1,
+        "temp2" : temp2,
+        "temp3" : temp3
     }
     return render(request,"petmgapp/protect/protect_search.html",context)
 
@@ -1003,10 +1045,14 @@ def getProtectSearch(request) :
 def getSupport(request):
     if request.method == "GET" :
         desertionno = request.GET["desertionno"]
+        s_table = request.GET["s_table"]
     elif request.method == "POST" :
         desertionno = request.POST["desertionno"]
+        s_table = request.GET["s_table"]
         
-    dog_list = support.getSupport(desertionno)
+    # return HttpResponse(s_table)
+            
+    dog_list = support.getSupport(desertionno, s_table)
     
     return render(request,
                     "petmgapp/support/support.html",

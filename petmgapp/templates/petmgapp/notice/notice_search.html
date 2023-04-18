@@ -15,7 +15,9 @@
         <script type = "text/javascript">
             function goview(desertionno){
                 url = "/pet/notice_view/?";
-                url = url + "desertionno=" + desertionno;
+                url = url + "desertionno=" + desertionno + "&"
+                url = url + "s_table=" + s_table.value + "&"
+
                 location.href = url;
             }
             function getsearch(){
@@ -28,13 +30,76 @@
 
             function gosupport(desertionno){
                 url = "/pet/support/?";
-                url = url + "desertionno=" + desertionno;
+                url = url + "desertionno=" + desertionno + "&"
+                url = url + "s_table=" + s_table.value.slice(0,3) + "&"
                 location.href = url;
+        }
+
+            function refresh(obj){
+                var selectVal = $(obj).val(); // 선택 값 가져오기
+                var s_col = $(s_col).val(); // 선택 값 가져오기
+                var keyword = $(keyword).val(); // 선택 값 가져오기
+
+                {% comment %} if(typeof(s_col) == 'undefined') 
+                    s_col = 0;
+                
+                if(typeof(keyword) == 'undefined') 
+                    keyword = 0; {% endcomment %}
+                    
+                {% comment %} 
+                if(selectVal == ""){
+                    alert("직무를 선택해주세요.");
+                } else if(selectVal == "dog_notice"){
+                    alert("강아지를 선택하셨습니다." + selectVal + s_col + keyword);
+                } else if(selectVal == "cat_notice"){
+                    alert("고양이를 선택하셨습니다." + selectVal + s_col + keyword);
+                }  {% endcomment %}
+
+                if(obj.value) 
+                    url = "/pet/notice_search/?";
+                    url = url + "s_table=" + selectVal + "&"
+                    url = url + "s_col=" + s_col + "&"
+                    url = url + "keyword=" + keyword + "&"
+
+                    document.getElementById('search').submit();
+
+                    search.action = url
+            }
+
+            function checkedInit(temp1, temp2, temp3){
+                {% comment %} alert(temp1 + ' ' + temp2 + ' ' + temp3) {% endcomment %}
+
+                s_table = document.getElementById("s_table");
+                s_col = document.getElementById("s_col");
+                keyword = document.getElementById("keyword");
+
+                {% comment %} alert(s_col.length); {% endcomment %}
+
+                for(i=0; i < s_table.length; i++) {
+
+                    if(s_table[i].value == temp1)
+                    {
+                        {% comment %} alert(s_table[i].value) {% endcomment %}
+                        s_table[i].selected = true;
+                    }
+                }
+
+                for(i=0; i < s_col.length; i++) {
+
+                    if(s_col[i].value == temp2)
+                    {
+                        {% comment %} alert(s_col[i].value) {% endcomment %}
+                        s_col[i].selected = true;
+                    }
+                }
+
+                if (keyword != temp3)
+                    keyword.value = temp3;
             }
         </script>
 </head> 
 
-<body class="d-flex flex-column min-vh-100" onload="init('{{temp_keyword}}', '{{temp_keyword2}}')">
+<body class="d-flex flex-column min-vh-100" onload="checkedInit('{{temp1}}', '{{temp2}}', '{{temp3}}')">
 
     <!-- 상단 -->
     <header>
@@ -53,20 +118,24 @@
                                     <form method="get" id="search" name="search" action="#">
                                         <table class="pull-right">
                                             <tr>
-                                                <td><select class="form-select" name="s_table" id="s_table">
-                                                        <option value="dog_notice">발견했어요</option>
+                                                <td><select class="form-select" name="s_table" id="s_table" onchange="refresh(this)">
+                                                        <option value="dog_notice">발견했어요(강아지)</option>
+                                                        <option value="cat_notice">발견했어요(고양이)</option>
+                                                        <option value="etc_notice">발견했어요(기타)</option>
                                                 </select></td>
+
                                                 <td><select class="form-select" name="s_col" id="s_col">
                                                         <option value="desertionno">유기번호</option>
                                                         <option value="happendt">접수일자</option>
                                                         <option value="happenplace">발견장소</option>
                                                         <option value="kindcd">품종</option>
-
                                                         <option value="colorcd">색상</option>
                                                         <option value="age">나이</option>
                                                         <option value="weight">체중</option>
-                                                        <option value="weight">성별/중성화여부</option>
+                                                        <option value="sexcd">성별</option>
+                                                        <option value="neuteryn">중성화여부</option>
                                                 </select></td>
+
                                                 <td><input type="text" class="form-control"
                                                     placeholder="검색어 입력" id="keyword" name="keyword" maxlength="100"></td>
                                                 <td><button type="submit" class="btn btn-light" onclick="getsearch(s_table, s_col, keyword)" >검색🔍</button></td>
@@ -97,8 +166,8 @@
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item"> <img src="{% static 'petmgapp/img/public/h1.png' %}">유기번호<img src="{% static 'petmgapp/img/public/h1.png' %}"> <a href="javascript:goview('{{dog.desertionno}}')">{{dog.desertionno}}</a><br/></li>
-                                        <li class="list-group-item">접수 일자: {{dog.happendt}}</li>
-                                        <li class="list-group-item">발견 장소: {{dog.happenplace}}</li>
+                                        <li class="list-group-item">접수일자: {{dog.happendt}}</li>
+                                        <li class="list-group-item">발견장소: {{dog.happenplace}}</li>
                                         <li class="list-group-item">품종: {{dog.kindcd}}</li>
                                         <li class="list-group-item">색상: {{dog.colorcd}}</li>
                                         <li class="list-group-item">나이: {{dog.age}}</li>

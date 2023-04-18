@@ -150,14 +150,14 @@
                 <!-- 회원전용-->
                 <div class="row">
                     <div class="col-lg-6 col-sm-12 text-lg-start text-center">
-                        <!-- 후원하기 기능 회원전용-->
+                        {% comment %} <!-- 후원하기 기능 회원전용-->
                         {% if request.session.ses_mem_id == None %}
                         <button type="button" class="btn btn-outline-warning fw-bold"  style="color : black" disabled value='후원하기(회원전용)'>
                         후원하기(회원전용)</button>
                         {% else %}
                         <button type="button" class="btn btn-outline-warning fw-bold"  style="color : black"
                         onclick="gosupport('{{dog_list.desertionno}}')">후원하기</button>
-                        {% endif %}
+                        {% endif %} {% endcomment %}
                     </div>
                     <div class="col-lg-6 col-sm-12 text-lg-end text-center mt-sm-auto">
                         <button type="button" class="btn btn-outline-warning fw-bold"  style="color : black"

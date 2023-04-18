@@ -47,9 +47,11 @@
                 history.go(-1);
             }
 
-            function gosupport(desertionno){
+            function gosupport(desertionno, s_table){
                 url = "/pet/support/?";
-                url = url + "desertionno=" + desertionno;
+                url = url + "desertionno=" + desertionno + "&"
+                url = url + "s_table=" + s_table.slice(0,3) + "&"
+                {% comment %} alert(url); {% endcomment %}
                 location.href = url;
             }
         </script>
@@ -64,10 +66,41 @@
 
     <!-- 페이지 메인 내용 -->  
     <div class="container-fluid p-3">
-          <div class="left mt-3">
+          {% comment %} <div>
+            <div class="left mt-3">
+                <div class="text-center">
+                  <img src="{{dog_list.popfile}}" class="rounded" width="30%">
+                </div>
+            </div>
+
+            <div class="right mt-3">
               <div class="text-center">
                 <img src="{{dog_list.popfile}}" class="rounded" width="30%">
               </div>
+            </div>
+          </div> {% endcomment %}
+
+          <div class="container row" style="float: none; margin:0 auto;">
+            <div class="col-md-6 text-lg-start" style="float: none; margin:0 auto;">
+                <div class="bg-primary">
+                  <img src="{{dog_list.popfile}}" class="rounded" width="100%">
+                </div>
+            </div>
+
+            {% if location_map != '' %}
+            <div class="col-md-6 text-lg-end" style="float: none; margin:0 auto;">
+              {% comment %} <div class="bg-warning"> {% endcomment %}
+                <div>
+                {% comment %} {% autoescape off %} {% endcomment %}
+                {{location_map | safe}}
+                {% comment %} {{location_map}} {% endcomment %}
+                {% comment %} {% endautoescape %} {% endcomment %}
+              </div>
+            </div>     
+            {% endif %}       
+            {% comment %} <div class="col-md-4">
+
+            </div> {% endcomment %}
           </div>
 
           <br/>
@@ -155,7 +188,7 @@
                           후원하기(회원전용)</button>
                         {% else %}
                         <button type="button" class="btn btn-outline-warning fw-bold"  style="color : black"
-                        onclick="gosupport('{{dog_list.desertionno}}')">후원하기</button>
+                        onclick="gosupport('{{dog_list.desertionno}}', '{{s_table}}')">후원하기</button>
                         {% endif %}
                       </div>
                       <div class="col-lg-6 col-sm-12 text-lg-end text-center mt-sm-auto">
@@ -164,7 +197,7 @@
                       </div>
                   </div>
               </div>
-          </div>    
+          </div>
     </div>   
 
   <!-- 하단 --> 

@@ -67,19 +67,20 @@ def DBClose(cursor, conn):
     ### 접속 끊기(통로가 사라짐)
     conn.close()
 
-def getSupport(desertionno) :
+def getSupport(desertionno, s_table) :
     conn, cursor = getDBConn_Cursor()
     
     ### SQL 구문 작성
     sql = """
-            select desertionno, filename, popfile  from dog_notice 
-            where dog_notice.desertionno =: desertionno
+            select desertionno, filename, popfile  from {1}_notice 
+            where {1}_notice.desertionno = {0}
             UNION ALL 
-            select desertionno, filename, popfile  from dog_protect
-            where dog_protect.desertionno =: desertionno
-    """
+            select desertionno, filename, popfile  from {1}_protect
+            where {1}_protect.desertionno = {0}
+    """.format(desertionno, s_table)
+    
     ### 구문을 서버에게 보내서 요청하고, 결과 받아오기
-    cursor.execute(sql, desertionno = desertionno)
+    cursor.execute(sql)
     
     rows = cursor.fetchone()
     
@@ -178,6 +179,18 @@ def getSupportView(desertionno) :
             UNION ALL 
             select *  from dog_protect
             where dog_protect.desertionno =: desertionno
+            UNION ALL 
+            select *  from cat_notice
+            where cat_notice.desertionno =: desertionno
+            UNION ALL 
+            select *  from cat_protect
+            where cat_protect.desertionno =: desertionno
+            UNION ALL 
+            select *  from etc_notice
+            where etc_notice.desertionno =: desertionno
+            UNION ALL 
+            select *  from etc_protect
+            where etc_protect.desertionno =: desertionno
     """
     ### 구문을 서버에게 보내서 요청하고, 결과 받아오기
     cursor.execute(sql, desertionno = desertionno)

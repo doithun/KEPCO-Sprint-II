@@ -42,9 +42,9 @@ urlpatterns = [
     path('support_view/',views.getSupportView),
     path('support_list/',views.getSupportList),
     
-    path('dog_tip1/',views.getTip1),
-    path('dog_tip2/',views.getTip2),   
-    path('dog_tip3/',views.getTip3), 
+    path('tip1/',views.getTip1),
+    path('tip2/',views.getTip2),   
+    path('tip3/',views.getTip3), 
     
     
     

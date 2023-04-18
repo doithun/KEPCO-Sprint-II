@@ -93,17 +93,18 @@ def getNotice() :
     
     return list_row
 
-def getNoticeView(desertionno) :
+def getNoticeView(desertionno, s_table) :
     conn, cursor = getDBConn_Cursor()
     
     ### SQL 구문 작성
     sql = """
             select substr(happendt, 0,4)||'-'||substr(happendt, 5,2) ||'-'|| substr(happendt, 7,2) as happendt,req_no,desertionno,filename,happenplace,kindcd,colorcd,age,weight,noticeno,
                     noticesdt,noticeedt,popfile,processstate,sexcd,neuteryn,specialmark,carenm,caretel,careaddr,orgnm,chargenm,officetel,noticecomment
-                        from dog_notice where desertionno =: desertionno
-    """
+                        from {1} where desertionno = {0}
+    """.format(desertionno, s_table)
+    
     ### 구문을 서버에게 보내서 요청하고, 결과 받아오기
-    cursor.execute(sql, desertionno = desertionno)
+    cursor.execute(sql)
     
     rows = cursor.fetchone()
     

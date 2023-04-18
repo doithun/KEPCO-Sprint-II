@@ -61,15 +61,15 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.container  .hero h2{
+.container .hero h2{
     font-size: 60px;
     margin-bottom: 20px;
 }
-.container  .hero p{
+.container .hero p{
     font-size: 25px;
 }
 
-.container  .hero button{
+.container .hero button{
     background: none;
     border: 2px solid darkseagreen;
     color: black;
@@ -79,9 +79,9 @@
     outline: none;
     cursor: pointer;
     transition: all .5s;
-    font-size: 25px;
+    font-size: 15px;
 }
 
-.container  .hero button:hover{
+.container .hero button:hover{
     background-color: WHITE;
 }

@@ -13,28 +13,70 @@
         type="text/css">
 
         <script type = "text/javascript">
+
             function goview(desertionno){
+                {% comment %} alert(s_table.value) {% endcomment %}
+
                 url = "/pet/notice_view/?";
-                url = url + "desertionno=" + desertionno;
+                url = url + "desertionno=" + desertionno + "&"
+                url = url + "s_table=" + s_table.value + "&"
+
+                {% comment %} alert(url) {% endcomment %}
+
                 location.href = url;
             }
+            
             function getsearch(){
+                {% comment %} alert(s_table.value + s_col.value + keyword.value) {% endcomment %}
+
                 url = "/pet/notice_search/?";
                 url = url + "s_table=" + s_table.value + "&"
-                url = url + "s_col=" + s_col + "&"
-                url = url + "keyword=" + keyword + "&"
+                url = url + "s_col=" + s_col.value + "&"
+                url = url + "keyword=" + keyword.value + "&"
                 search.action = url
-            }
+            }  
 
             function gosupport(desertionno){
                 url = "/pet/support/?";
-                url = url + "desertionno=" + desertionno;
+                url = url + "desertionno=" + desertionno + "&"
+                url = url + "s_table=" + s_table.value.slice(0,3) + "&"
                 location.href = url;
+            }   
+            
+            function refresh(obj){
+                var selectVal = $(obj).val(); // 선택 값 가져오기
+                var s_col = $(s_col).val(); // 선택 값 가져오기
+                var keyword = $(keyword).val(); // 선택 값 가져오기
+
+                if(typeof(s_col) == 'undefined') 
+                    s_col = 'desertionno';
+                
+                if(typeof(keyword) == 'undefined') 
+                    keyword = ''; 
+
+                {% comment %} 
+                if(selectVal == ""){
+                    alert("선택해주세요.");
+                } else if(selectVal == "dog_notice"){
+                    alert("강아지를 선택하셨습니다." + selectVal + s_col + keyword);
+                } else if(selectVal == "cat_notice"){
+                    alert("고양이를 선택하셨습니다." + selectVal + s_col + keyword);
+                }  {% endcomment %}
+
+                if(obj.value) 
+                    url = "/pet/notice_search/?";
+                    url = url + "s_table=" + selectVal + "&"
+                    url = url + "s_col=" + s_col + "&"
+                    url = url + "keyword=" + keyword + "&"
+
+                    {% comment %} alert(url) {% endcomment %}
+
+                    location.href  = url
             }
         </script>  
 </head> 
 
-<body class="d-flex flex-column min-vh-100" onload="init('{{temp_keyword}}', '{{temp_keyword2}}')">
+<body class="d-flex flex-column min-vh-100">
 
     <!-- 상단 -->
     <header>
@@ -55,8 +97,11 @@
                                     <table class="pull-right">
                                         <tr>
                                             <td>
-                                                <select class="form-select" name="s_table" id="s_table">
-                                                        <option value="dog_notice">발견했어요</option>
+                                                <select class="form-select" name="s_table" id="s_table" onchange="refresh(this)">
+
+                                                    <option value="dog_notice">발견했어요(강아지)</option>
+                                                    <option value="cat_notice">발견했어요(고양이)</option>
+                                                    <option value="etc_notice">발견했어요(기타)</option>
                                                 </select>
                                             </td>
                                             <td>
@@ -65,11 +110,11 @@
                                                     <option value="happendt">접수일자</option>
                                                     <option value="happenplace">발견장소</option>
                                                     <option value="kindcd">품종</option>
-
                                                     <option value="colorcd">색상</option>
                                                     <option value="age">나이</option>
                                                     <option value="weight">체중</option>
-                                                    <option value="weight">성별/중성화여부</option>
+                                                    <option value="sexcd">성별</option>
+                                                    <option value="neuteryn">중성화여부</option>
                                                 </select>
                                             </td>
                                             <td>
@@ -102,15 +147,15 @@
                         <div class="col">
                             <div class="card border-warning h-100">
 
-                                <a href="javascript:goview('{{dog.desertionno}}')">
+                                <a href="javascript:goview('{{dog.desertionno }}')">
                                     <img src="{{dog.popfile}}" class="card-img-top" alt="...">
                                 </a>
                                 
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item"> <img src="{% static 'petmgapp/img/public/h1.png' %}">유기번호<img src="{% static 'petmgapp/img/public/h1.png' %}"> <a href="javascript:goview('{{dog.desertionno}}')">{{dog.desertionno}}</a><br/></li>
-                                        <li class="list-group-item">접수 일자: {{dog.happendt}}</li>
-                                        <li class="list-group-item">발견 장소: {{dog.happenplace}}</li>
+                                        <li class="list-group-item">접수일자: {{dog.happendt}}</li>
+                                        <li class="list-group-item">발견장소: {{dog.happenplace}}</li>
                                         <li class="list-group-item">품종: {{dog.kindcd}}</li>
                                         <li class="list-group-item">색상: {{dog.colorcd}}</li>
                                         <li class="list-group-item">나이: {{dog.age}}</li>
@@ -181,7 +226,6 @@
     <footer class="bg-dark mt-auto">
         {% include 'petmgapp/include/base_footer.html' %}     
     </footer>
-
 
     {% include 'petmgapp/include/lib/bottstrap_js.html' %}
 </body>

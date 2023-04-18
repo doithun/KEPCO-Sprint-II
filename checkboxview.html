@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>::: 체크박스 컨트롤 :::</title>
+    <script type="text/javascript">
+        //-- 전국을 제외한 모든 체크박스는 아래 함수 수행
+        // 함수기능 : "전국"에 대한 체크 해제하기
+        function checkBase(){
+            fm = document.getElementById("fm");
+
+            // 전국에 대한 체크만 해제하기
+            for(i=0; i < fm.city.length; i++) {
+                if(fm.city[i].value == "전국"){
+                    fm.city[i].checked = false;
+                }
+            }
+        }
+
+        //-- 전국을 체크한 경우 체크된 다른 지역의 체크 해제처리
+        function checkBoxClean(){
+            fm = document.getElementById("fm");
+
+            //-- 전국을 제외한 나머지 지역은 체크 해제하기
+            for(i=0; i < fm.city.length; i++) {
+                if(fm.city[i].value != "전국"){
+                    fm.city[i].checked = false;
+                }
+            }
+        }
+
+        //-- 조회하기 처리
+        function goList(page)  {
+            // 선택된 목록 가져오기
+            fm = document.getElementById("fm");
+
+            // 체크된 항목만 추출하기
+            str_all = "";
+            for(i=0; i < fm.city.length; i++) {
+                if(fm.city[i].checked == true){
+                    str_all += fm.city[i].value + ",";
+                }
+            }
+            // 문자열의 마지막에 붙어있는 콤마(,) 제거하기
+            // slice(0, -1) : 시작문자열부터~마지막전 문자열까지 추출하기
+            str_all = str_all.slice(0, -1);
+            alert(str_all);
+          }
+
+          /* 기존에 체크된 항목 유지시키기 */
+          function checkedInit(checked_city){
+            fm = document.getElementById("fm");
+
+            split_list = checked_city.split(",");
+            alert(split_list);
+
+            //-- 전국을 제외한 나머지 지역은 체크 해제하기
+            for(i=0; i < fm.city.length; i++) {
+                for(j=0; j < split_list.length; j++){
+                    if(fm.city[i].value == split_list[j]){
+                        alert(split_list[j]);
+                        fm.city[i].checked = true;
+                        break;
+                    }
+                }
+            }
+          }
+    </script>
+
+</head>
+<!-- 아래 checkedInit('{{ city }}') 함수에 city의 값을 넣어서 넘기면됨 -->
+<body onload="checkedInit('경기,부산')">
+    <form id="fm" action="#" method="post">
+        {% csrf_token %}
+        체크박스 컨트롤
+        <hr/>
+        <input type='checkbox' name="city" value='서울' 
+        onclick="checkBase()"/>서울
+        <input type='checkbox' name="city" value='경기' 
+        onclick="checkBase()"/>경기
+        <input type='checkbox' name="city" value='부산' 
+        onclick="checkBase()"/>부산
+        <input type='checkbox' name="city" value='대구' 
+        onclick="checkBase()"/>대구
+        <input type='checkbox' name="city" value='전국' 
+            onclick="checkBoxClean()"/><strong>전국</strong>
+        
+        <input type='button' value='조회' onclick="goList()">
+    </form>
+</body>
+</html>

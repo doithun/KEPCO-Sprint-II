@@ -66,10 +66,41 @@
 
     <!-- 페이지 메인 내용 -->  
     <div class="container-fluid p-3">
-          <div class="left mt-3">
+          {% comment %} <div>
+            <div class="left mt-3">
+                <div class="text-center">
+                  <img src="{{dog_list.popfile}}" class="rounded" width="30%">
+                </div>
+            </div>
+
+            <div class="right mt-3">
               <div class="text-center">
                 <img src="{{dog_list.popfile}}" class="rounded" width="30%">
               </div>
+            </div>
+          </div> {% endcomment %}
+
+          <div class="container row" style="float: none; margin:0 auto;">
+            <div class="col-md-6 text-lg-start" style="float: none; margin:0 auto;">
+                <div class="bg-primary">
+                  <img src="{{dog_list.popfile}}" class="rounded" width="100%">
+                </div>
+            </div>
+
+            {% if location_map != '' %}
+            <div class="col-md-6 text-lg-end" style="float: none; margin:0 auto;">
+              {% comment %} <div class="bg-warning"> {% endcomment %}
+                <div>
+                {% comment %} {% autoescape off %} {% endcomment %}
+                {{location_map | safe}}
+                {% comment %} {{location_map}} {% endcomment %}
+                {% comment %} {% endautoescape %} {% endcomment %}
+              </div>
+            </div>     
+            {% endif %}       
+            {% comment %} <div class="col-md-4">
+
+            </div> {% endcomment %}
           </div>
 
           <br/>

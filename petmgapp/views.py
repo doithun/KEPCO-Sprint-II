@@ -657,11 +657,30 @@ def getProtectView(request) :
     # return HttpResponse(s_table)
         
     dog_list = protect.getProtectView(desertionno, s_table)
+
+    location = [dog_list['careaddr']]
     
+    # return HttpResponse(location)
+    if kakao.getLocation_info(location) != False:
+        df, x, y = kakao.getLocation_info(location)
+    else :
+        return render(request,
+                        "petmgapp/notice/notice_view.html",
+                            {"dog_list" : dog_list,
+                            "s_table" : s_table,
+                            "location_map" : ""})       
+    
+    location_xy = [x,y]
+    
+    location_map = kakao.getKakaoMapHtml(dog_list['carenm'],y, x)
+    
+    # return HttpResponse(location_map)
+        
     return render(request,
                     "petmgapp/protect/protect_view.html",
                         {"dog_list" : dog_list,
-                        "s_table" : s_table})
+                        "s_table" : s_table,
+                        "location_map" : location_map})
 
 
 def getFind(request) : 

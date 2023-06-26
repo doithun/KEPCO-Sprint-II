@@ -73,7 +73,7 @@ def ReportInsert(data) :
                     NEUTERYN, SPECIALMARK )
                 VALUES (
                     {},
-                    '{}',
+                    '{}',+
                     '{}',
                     '{}',
                     '{}',
